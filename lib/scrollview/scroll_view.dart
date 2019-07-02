@@ -46,7 +46,7 @@ class _ScrollControllerTestRouteState extends State<ScrollControllerTestRoute> {
               itemExtent: 50.0, //列表项高度固定，性能消耗小
               controller: _controller,
               itemBuilder: (context, indext) {
-                return ListTile(title: Text("$indext"),);
+                return ListTile(title: Text(indext.toString()),);
               }),),
       floatingActionButton: !showToTopBtn ? null : FloatingActionButton(
         child: Icon(Icons.arrow_upward),
@@ -56,7 +56,9 @@ class _ScrollControllerTestRouteState extends State<ScrollControllerTestRoute> {
         },
       ),
     );
+
   }
+
 
 
 }

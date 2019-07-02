@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_demo/bottomnavigationbar/pages/bottom_navigation_widget.dart';
 import 'package:flutter_demo/layout_type.dart';
 import 'package:flutter_demo/pages/main_app_bar.dart';
 import 'package:flutter_demo/scrollview/scroll_view.dart';
+import 'package:flutter_demo/shopping/index_page.dart';
 
 class Route {
   Route({this.name, this.widget, this.voidCallback});
@@ -46,13 +48,13 @@ class ContactListTile extends ListTile {
       : super(
       title: Text(route.name),
       onTap: () {
-        Navigator.push(context, new MaterialPageRoute(builder: (context) {
-          return route.widget;
-        }));
+        if (route.voidCallback == null) {
+          navigatoionPush(route, context);
+        } else {
+          route.voidCallback();
+        }
       },
-      onLongPress: route.voidCallback,
       leading: CircleAvatar(child: Text(route.name[0])),
-
   );
 }
 
@@ -61,9 +63,9 @@ List<Route> allContacts = [
       name: 'ScrollView Controller Test',
       widget: new ScrollControllerTestRoute()),
   Route(name: 'Jump To Native Page',  widget: new ScrollControllerTestRoute(), voidCallback: jumpToNativePage),
-  Route(name: 'Racquel Ricciardi', widget: new ScrollControllerTestRoute()),
-  Route(name: 'Teresita Mccubbin', widget: new ScrollControllerTestRoute()),
-  Route(name: 'Rhoda Hassinger', widget: new ScrollControllerTestRoute()),
+  Route(name: 'sendMessageToPlatfrom', widget: new ScrollControllerTestRoute(), voidCallback: sendMessageToPlatfrom),
+  Route(name: 'receiveMessageFromPlatfrom', widget: new BottomNavigationWidget()),
+  Route(name: 'shopping', widget: new IndexPage()),
   Route(name: 'Carson Cupps', widget: new ScrollControllerTestRoute()),
   Route(name: 'Devora Nantz', widget: new ScrollControllerTestRoute()),
   Route(name: 'Tyisha Primus', widget: new ScrollControllerTestRoute()),
@@ -82,11 +84,34 @@ List<Route> allContacts = [
   Route(name: 'Rhiannon Macfarlane', widget: new ScrollControllerTestRoute()),
 ];
 
+void navigatoionPush(Route route, BuildContext context) {
+  Navigator.push(context, new MaterialPageRoute(builder: (context) {
+    return route.widget;
+  }));
+}
+
+
 void jumpToNativePage() {
   jumpToNativePageFuture();
 }
 
+void sendMessageToPlatfrom() {
+  sendMessage();
+}
+
+
 Future<Null> jumpToNativePageFuture() async {
-  MethodChannel methodChannel = MethodChannel('com.flutterbus/demo');
-  await methodChannel.invokeMethod("gotoUiTestPage");
+  MethodChannel methodChannel = MethodChannel('com.flutterbus/demo/method');
+  Map<String, String> map = {"object": "qadad"};
+  await methodChannel.invokeMethod("gotoUiTestPage", map);
+  //await methodChannel.invokeMethod("gotoUiTestPage");
+}
+
+BasicMessageChannel<Object> _basicMessageChannel = BasicMessageChannel<Object>('com.flutterbus/demo/message', StandardMessageCodec());
+
+//发送消息到platform端并受到回复
+Future<String> sendMessage() async {
+  String reply = await _basicMessageChannel.send("i am dart side");
+  print('dart receive message + $reply');
+  return reply;
 }

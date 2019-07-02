@@ -190,4 +190,5 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
+
 }
