@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
+import 'package:flutter_demo/shopping/provide/counter_provide.dart';
 import 'package:provide/provide.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_demo/main_page.dart';
 import 'package:flutter_demo/shopping/shopping_page.dart';
-import 'package:flutter_demo/shopping/provide/counter.dart';
 
 void main() {
   //runApp(_widgetForRoute(ui.window.defaultRouteName));
