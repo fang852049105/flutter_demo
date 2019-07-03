@@ -1,0 +1,113 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/config/service_url.dart';
+import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
+import 'package:flutter_demo/shopping/model/category_model.dart';
+import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
+import 'package:flutter_demo/shopping/provide/child_category.dart';
+import 'package:flutter_demo/shopping/service/service_method.dart';
+import 'package:flutter_demo/shopping/utils/http_util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+
+
+class LeftCategoryNav extends StatefulWidget {
+  @override
+  _LeftCategoryNavState createState() => _LeftCategoryNavState();
+}
+
+class _LeftCategoryNavState extends State<LeftCategoryNav> {
+  List<CategoryBigModel> categoryList = [];
+  var listIndex = 0; //索引
+  String categoryId = '4';
+
+  @override
+  void initState() {
+    _getCategory();
+    _getGoodsList();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    return Container(
+      width: ScreenUtil().setWidth(180),
+      decoration: BoxDecoration(
+        border: Border(
+          right: BorderSide(width: 1, color: Colors.black12)
+        )
+      ),
+      child: ListView.builder(
+        itemCount: categoryList.length,
+        itemBuilder: (context, index) {
+          return _leftCategoryItem(index);
+        },
+      ),
+    );
+  }
+
+  void _getCategory() async {
+
+//   await getContent('getCategory').then((val) {
+//      var data = json.decode(val.toString());
+//      CategoryBigListModel model = CategoryBigListModel.formJson(data['data']);
+//      setState(() {
+//        categoryList = model.CategoryBigModelList;
+//      });
+//    });
+    HttpUtil().post(servicePath['getCategory'], (val) {
+      var data = json.decode(val.toString());
+      CategoryBigListModel model = CategoryBigListModel.formJson(data['data']);
+      setState(() {
+        categoryList = model?.CategoryBigModelList;
+      });
+      Provide.value<ChildCategory>(context).setChildCategory(categoryList[0].bxMallSubDto, categoryId);
+    });
+  }
+
+  void _getGoodsList({String categoryId}) async {
+    var data = {
+      'categoryId':categoryId == null ? '4' : categoryId,
+      'categorySubId':"",
+      'page':1
+    };
+    await getContent('getMallGoods', formData: data).then((val) {
+      var data = json.decode(val.toString());
+      CategoryGoodsListModel goodsList =  CategoryGoodsListModel.fromJson(data);
+      Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+    });
+  }
+
+  Widget _leftCategoryItem(int index) {
+    bool isHighLight = (index == listIndex);
+    return InkWell(
+      onTap: () {
+        setState(() {
+          listIndex = index;
+        });
+
+        var childList = categoryList[index].bxMallSubDto;
+        categoryId = categoryList[index].mallCategoryId;
+        Provide.value<ChildCategory>(context).setChildCategory(childList, categoryId);
+        Provide.value<ChildCategory>(context).changeChildIndex(0);
+        _getGoodsList(categoryId: categoryId);
+      },
+      child: Container(
+        height: ScreenUtil().setHeight(100),
+        padding: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+        decoration: BoxDecoration(
+          color: isHighLight ? Colors.black12 : Colors.white,
+          border: Border(
+            bottom: BorderSide(width: 1, color: Colors.black12)
+          )
+        ),
+        child: Text(
+          categoryList[index].mallCategoryName, 
+          style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+        ),
+      ),
+    );
+  }
+
+}
