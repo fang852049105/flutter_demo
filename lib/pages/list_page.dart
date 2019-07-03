@@ -4,7 +4,7 @@ import 'package:flutter_demo/bottomnavigationbar/pages/bottom_navigation_widget.
 import 'package:flutter_demo/layout_type.dart';
 import 'package:flutter_demo/pages/main_app_bar.dart';
 import 'package:flutter_demo/scrollview/scroll_view.dart';
-import 'package:flutter_demo/shopping/index_page.dart';
+import 'package:flutter_demo/shopping/shopping_page.dart';
 
 class Route {
   Route({this.name, this.widget, this.voidCallback});
@@ -65,7 +65,7 @@ List<Route> allContacts = [
   Route(name: 'Jump To Native Page',  widget: new ScrollControllerTestRoute(), voidCallback: jumpToNativePage),
   Route(name: 'sendMessageToPlatfrom', widget: new ScrollControllerTestRoute(), voidCallback: sendMessageToPlatfrom),
   Route(name: 'receiveMessageFromPlatfrom', widget: new BottomNavigationWidget()),
-  Route(name: 'shopping', widget: new IndexPage()),
+  Route(name: 'shopping', widget: new ShoppingPage()),
   Route(name: 'Carson Cupps', widget: new ScrollControllerTestRoute()),
   Route(name: 'Devora Nantz', widget: new ScrollControllerTestRoute()),
   Route(name: 'Tyisha Primus', widget: new ScrollControllerTestRoute()),

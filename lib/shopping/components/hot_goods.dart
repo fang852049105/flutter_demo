@@ -52,7 +52,7 @@ class _HotGoodsState extends State<HotGoods> {
     child: Text('火爆专区'),
   );
 
-  //火爆专区子项
+  //火爆专区子项, 使用Wrap的布局方式制作列表
   Widget _wrapList(){
     if (hotGoodsList.length != 0) {
       List<Widget> listWidget = hotGoodsList.map((val) {

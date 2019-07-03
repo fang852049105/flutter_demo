@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/shopping/components/left_caategory_nav.dart';
+import 'package:flutter_demo/shopping/components/category_goods_list.dart';
+import 'package:flutter_demo/shopping/components/left_category_nav.dart';
+import 'package:flutter_demo/shopping/components/right_category_nav.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -14,7 +16,17 @@ class _CategoryPageState extends State<CategoryPage> {
         title: Text('商品分类'),
       ),
       body: Container(
-        child: LeftCategoryNav(),
+        child: Row(
+          children: <Widget>[
+            LeftCategoryNav(),
+            Column(
+              children: <Widget>[
+                RightCategoryNav(),
+                CategoryGoodsList()
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

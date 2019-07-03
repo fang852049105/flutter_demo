@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
+import 'package:flutter_demo/shopping/provide/child_category.dart';
+import 'package:provide/provide.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_demo/main_page.dart';
+import 'package:flutter_demo/shopping/shopping_page.dart';
+import 'package:flutter_demo/shopping/provide/counter.dart';
 
-void main() => runApp(_widgetForRoute(ui.window.defaultRouteName));
+void main() {
+  //runApp(_widgetForRoute(ui.window.defaultRouteName));
+  //将状态放入顶层
+  var counter = Counter();
+  var childCategory = ChildCategory();
+  var categoryGoodsListProvide = CategoryGoodsListProvide();
+  var providers = Providers();
+  //将对象添加进providers
+  providers..provide(Provider<Counter>.value(counter));
+  providers..provide(Provider<ChildCategory>.value(childCategory));
+  providers..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide));
+  runApp(ProviderNode(child: _widgetForRoute(ui.window.defaultRouteName), providers: providers));
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -13,7 +30,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: MainPage(),
+      //home: MainPage(),
+      home: ShoppingPage(),
     );
   }
 }

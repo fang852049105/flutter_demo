@@ -36,7 +36,8 @@ dependencies:
   fluttertoast: ^2.1.1
   #下拉，上拉
   flutter_easyrefresh: ^1.2.7
-
+  #状态管理
+  provide: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - images/test1.png
   # To add Flutter specific assets to your application, add an assets section, 
   # like this:
   # assets:
