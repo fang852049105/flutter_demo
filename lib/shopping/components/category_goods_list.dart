@@ -5,6 +5,7 @@ import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
+import 'package:flutter_demo/shopping/utils/toast_util.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
@@ -86,6 +87,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
         Provide.value<ChildCategory>(context).addPage();
       } else {
         Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(false);
+        ToastUtil.getInstance().showToast("已经到底了");
       }
     });
 

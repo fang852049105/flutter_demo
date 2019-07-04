@@ -74,15 +74,17 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       'categorySubId':"",
       'page':1
     };
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: LoadingDialog(
-              text: "加载中...",
-            ),
-          );
-        });
+    if (categoryId != null) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: LoadingDialog(
+                text: "加载中...",
+              ),
+            );
+          });
+    }
 
     await getContent('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
@@ -92,7 +94,9 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       } else {
         Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
       }
-      Navigator.pop(context);
+      if (categoryId != null) {
+        Navigator.pop(context);
+      }
     });
   }
 

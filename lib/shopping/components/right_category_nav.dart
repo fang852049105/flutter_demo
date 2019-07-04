@@ -2,13 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/components/loading_dialog.dart';
-import 'package:flutter_demo/shopping/config/service_url.dart';
 import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/model/category_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
-import 'package:flutter_demo/shopping/utils/http_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
@@ -17,7 +15,6 @@ class RightCategoryNav extends StatefulWidget {
 }
 
 class _RightCategoryNavState extends State<RightCategoryNav> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
