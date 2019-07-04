@@ -5,6 +5,7 @@ import 'package:flutter_demo/shopping/components/ad_banner.dart';
 import 'package:flutter_demo/shopping/components/floor_content.dart';
 import 'package:flutter_demo/shopping/components/floor_title.dart';
 import 'package:flutter_demo/shopping/components/leader_phone.dart';
+import 'package:flutter_demo/shopping/components/loading_dialog.dart';
 import 'package:flutter_demo/shopping/components/recommend.dart';
 import 'package:flutter_demo/shopping/components/top_navigator.dart';
 import 'package:flutter_demo/shopping/components/wheel_banner.dart';
@@ -94,7 +95,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
             } else {
               return Center(
-                child: Text('加载中'),
+                child: LoadingDialog(
+                  text: "加载中...",
+                ),
               );
             }
           }),

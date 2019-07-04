@@ -50,7 +50,7 @@ class HttpUtil {
   }
 
   _requstHttp(String url, Function successCallBack,
-      [String method, FormData params, Function errorCallBack]) async {
+      [String method, params, Function errorCallBack]) async {
     String errorMsg = '';
     int code;
     try {

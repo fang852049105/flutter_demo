@@ -11,6 +11,8 @@ import 'package:flutter_demo/shopping/utils/http_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
+import 'loading_dialog.dart';
+
 
 class LeftCategoryNav extends StatefulWidget {
   @override
@@ -72,6 +74,16 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       'categorySubId':"",
       'page':1
     };
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: LoadingDialog(
+              text: "加载中...",
+            ),
+          );
+        });
+
     await getContent('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList =  CategoryGoodsListModel.fromJson(data);
@@ -80,6 +92,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       } else {
         Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
       }
+      Navigator.pop(context);
     });
   }
 

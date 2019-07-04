@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/components/loading_dialog.dart';
+import 'package:flutter_demo/shopping/config/service_url.dart';
 import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/model/category_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
+import 'package:flutter_demo/shopping/utils/http_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
@@ -64,11 +67,20 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
 
   void _getGoodList(String categorySubId) {
 
-    var data={
+    var data = {
       'categoryId':Provide.value<ChildCategory>(context).categoryId,
       'categorySubId':categorySubId,
       'page':1
     };
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: LoadingDialog(
+              text: "加载中...",
+            ),
+          );
+        });
 
     getContent('getMallGoods',formData:data ).then((val){
       var  data = json.decode(val.toString());
@@ -78,8 +90,18 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       } else {
         Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
       }
-
+      Navigator.pop(context);
     });
+
+//    HttpUtil.getInstance().post(servicePath['getMallGoods'], (val) {
+//      var  data = json.decode(val.toString());
+//      CategoryGoodsListModel goodsList=  CategoryGoodsListModel.fromJson(data);
+//      if (goodsList.data == null) {
+//        Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+//      } else {
+//        Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+//      }
+//    }, params: data);
   }
 
 }
