@@ -23,6 +23,11 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   var _scrollController = new ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
     builder: (context, child, data) {

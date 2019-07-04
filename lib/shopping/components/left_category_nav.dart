@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/shopping/config/service_url.dart';
 import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/model/category_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
-import 'package:flutter_demo/shopping/utils/http_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
@@ -15,19 +13,21 @@ import 'loading_dialog.dart';
 
 
 class LeftCategoryNav extends StatefulWidget {
+  List<CategoryBigModel> categoryList = [];
+  LeftCategoryNav(this.categoryList, {Key key}): super(key: key);
+
   @override
   _LeftCategoryNavState createState() => _LeftCategoryNavState();
 }
 
 class _LeftCategoryNavState extends State<LeftCategoryNav> {
-  List<CategoryBigModel> categoryList = [];
+  //List<CategoryBigModel> categoryList = [];
   var listIndex = 0; //索引
   String categoryId = '4';
 
   @override
   void initState() {
-    _getCategory();
-    _getGoodsList();
+    //_getCategory();
     super.initState();
   }
   @override
@@ -41,31 +41,12 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
         )
       ),
       child: ListView.builder(
-        itemCount: categoryList.length,
+        itemCount: widget.categoryList.length,
         itemBuilder: (context, index) {
           return _leftCategoryItem(index);
         },
       ),
     );
-  }
-
-  void _getCategory() async {
-
-//   await getContent('getCategory').then((val) {
-//      var data = json.decode(val.toString());
-//      CategoryBigListModel model = CategoryBigListModel.formJson(data['data']);
-//      setState(() {
-//        categoryList = model.CategoryBigModelList;
-//      });
-//    });
-    HttpUtil().post(servicePath['getCategory'], (val) {
-      var data = json.decode(val.toString());
-      CategoryBigListModel model = CategoryBigListModel.formJson(data['data']);
-      setState(() {
-        categoryList = model?.CategoryBigModelList;
-      });
-      Provide.value<ChildCategory>(context).setChildCategory(categoryList[0].bxMallSubDto, categoryId);
-    });
   }
 
   void _getGoodsList({String categoryId}) async {
@@ -74,17 +55,15 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       'categorySubId':"",
       'page':1
     };
-    if (categoryId != null) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return Center(
-              child: LoadingDialog(
-                text: "加载中...",
-              ),
-            );
-          });
-    }
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: LoadingDialog(
+              text: "加载中...",
+            ),
+          );
+        });
 
     await getContent('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
@@ -94,9 +73,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       } else {
         Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
       }
-      if (categoryId != null) {
-        Navigator.pop(context);
-      }
+      Navigator.pop(context);
     });
   }
 
@@ -108,8 +85,8 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
           listIndex = index;
         });
 
-        var childList = categoryList[index].bxMallSubDto;
-        categoryId = categoryList[index].mallCategoryId;
+        var childList = widget.categoryList[index].bxMallSubDto;
+        categoryId = widget.categoryList[index].mallCategoryId;
         Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
         Provide.value<ChildCategory>(context).setChildCategory(childList, categoryId);
         _getGoodsList(categoryId: categoryId);
@@ -125,7 +102,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
           )
         ),
         child: Text(
-          categoryList[index].mallCategoryName, 
+          widget.categoryList[index].mallCategoryName,
           style: TextStyle(fontSize: ScreenUtil().setSp(28)),
         ),
       ),
