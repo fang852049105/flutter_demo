@@ -5,6 +5,7 @@ class CategoryGoodsListModel {
 
   CategoryGoodsListModel({this.code, this.message, this.data});
 
+  //命名构造函数
   CategoryGoodsListModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];

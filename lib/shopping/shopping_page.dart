@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages/airplay_screen.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages/pages_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/pages/cart_page.dart';
 import 'package:flutter_demo/shopping/pages/category_page.dart';
 import 'package:flutter_demo/shopping/pages/home_page.dart';
+import 'package:flutter_demo/shopping/pages/member_page.dart';
 
 class ShoppingPage extends StatefulWidget {
   @override
@@ -35,7 +34,7 @@ class _ShoppingPageState extends State<ShoppingPage> {
     HomePage(),
     CategoryPage(),
     CartPage(),
-    AirPlayScreen()
+    MemberPage()
   ];
   int currentIndex = 0;
   var currentPage;

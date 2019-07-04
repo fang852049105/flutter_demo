@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
+import 'package:flutter_demo/shopping/routers/application.dart';
+import 'package:flutter_demo/shopping/routers/routes.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_demo/shopping/utils/toast_util.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -96,7 +98,9 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget _ListWidget(List<CategoryListData> newList,int index){
 
     return InkWell(
-        onTap: (){},
+        onTap: (){
+          Application.router.navigateTo(context, Routes.goodsDetailPage + '?id=${newList[index].goodsId}');
+        },
         child: Container(
           padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
           decoration: BoxDecoration(

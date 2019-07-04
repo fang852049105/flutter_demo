@@ -9,6 +9,8 @@ import 'package:flutter_demo/shopping/components/loading_dialog.dart';
 import 'package:flutter_demo/shopping/components/recommend.dart';
 import 'package:flutter_demo/shopping/components/top_navigator.dart';
 import 'package:flutter_demo/shopping/components/wheel_banner.dart';
+import 'package:flutter_demo/shopping/routers/application.dart';
+import 'package:flutter_demo/shopping/routers/routes.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,84 +26,91 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   int page = 2;
   List<Map> hotGoodsList=[];
   GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
+  var data = null;
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
+    _getPageContent();
     super.initState();
     print('======home_page 初始化======');
   }
 
   @override
   Widget build(BuildContext context) {
+    if (data != null) {
+      List<Map> bannerList = (data['data']['slides'] as List)
+          .cast(); //cast() 类型提升；as 类型转换
+      String advertesPicture = data['data']['advertesPicture']['PICTURE_ADDRESS']; //广告图片
+      List<Map> navigatorList = (data['data']['category'] as List).cast(); //类别列表
+      if (navigatorList.length > 10) {
+        navigatorList.removeRange(10, navigatorList.length);
+      }
+      List<Map> recommendList = (data['data']['recommend'] as List).cast(); // 商品推荐
+      String leaderImage = data['data']['shopInfo']['leaderImage']; //店长图片
+      String leaderPhone = data['data']['shopInfo']['leaderPhone']; //店长电话
+      String floor1Title = data['data']['floor1Pic']['PICTURE_ADDRESS']; //楼层1的标题图片
+      String floor2Title = data['data']['floor2Pic']['PICTURE_ADDRESS']; //楼层1的标题图片
+      String floor3Title = data['data']['floor3Pic']['PICTURE_ADDRESS']; //楼层1的标题图片
+      List<Map> floor1 = (data['data']['floor1'] as List).cast(); //楼层1商品和图片
+      List<Map> floor2 = (data['data']['floor2'] as List).cast(); //楼层1商品和图片
+      List<Map> floor3 = (data['data']['floor3'] as List).cast(); //楼层1商品和图片
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('百姓生活+'),
+        ),
+        body: Container(
+          child: EasyRefresh(
+            child: ListView(
+              children: <Widget>[
+                WheelBanner(bannerList),
+                TopNavigator(navigatorList),
+                AdBanner(advertesPicture),
+                LeaderPhone(leaderImage, leaderPhone),
+                Recommend(recommendList),
+                FloorTitle(floor1Title),
+                FloorContent(floor1),
+                FloorTitle(floor2Title),
+                FloorContent(floor2),
+                FloorTitle(floor3Title),
+                FloorContent(floor3),
+                _hotGoods(),
+              ],
+            ),
+            loadMore: () async {
+              print('======开始加载更多======');
+              _getHotGoods();
+            },
+            refreshFooter: ClassicsFooter(
+              key: _footerKey,
+              bgColor: Colors.white,
+              textColor: Colors.orange,
+              moreInfoColor: Colors.orange,
+              noMoreText: '',
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Center(
+        child: LoadingDialog(
+          text: "加载中...",
+        ),
+      );
+    }
+
+  }
+
+  Future _getPageContent() {
     var fromData =  {'lon':'115.02932','lat':'35.76189'};
-    return Scaffold(
-    appBar: AppBar(
-    title: Text('百姓生活+'),
-    ),
-      body: FutureBuilder( //用于等待异步请求
-          future: getContent('homePageContent', formData:fromData),
-          builder: (context, snapshot) { //snapshot就是getHomePageContent在时间轴上执行过程的状态快照
-            if (snapshot.hasData) {
-              var data = json.decode(snapshot.data.toString());
-              List<Map> bannerList = (data['data']['slides'] as List).cast(); //cast() 类型提升；as 类型转换
-              String advertesPicture = data['data']['advertesPicture']['PICTURE_ADDRESS']; //广告图片
-              List<Map> navigatorList =(data['data']['category'] as List).cast(); //类别列表
-              if (navigatorList.length > 10) {
-                navigatorList.removeRange(10, navigatorList.length);
-              }
-              List<Map> recommendList = (data['data']['recommend'] as List).cast(); // 商品推荐
-              String  leaderImage = data['data']['shopInfo']['leaderImage'];  //店长图片
-              String  leaderPhone = data['data']['shopInfo']['leaderPhone']; //店长电话
-
-              String floor1Title =data['data']['floor1Pic']['PICTURE_ADDRESS'];//楼层1的标题图片
-              String floor2Title =data['data']['floor2Pic']['PICTURE_ADDRESS'];//楼层1的标题图片
-              String floor3Title =data['data']['floor3Pic']['PICTURE_ADDRESS'];//楼层1的标题图片
-              List<Map> floor1 = (data['data']['floor1'] as List).cast(); //楼层1商品和图片
-              List<Map> floor2 = (data['data']['floor2'] as List).cast(); //楼层1商品和图片
-              List<Map> floor3 = (data['data']['floor3'] as List).cast(); //楼层1商品和图片
-
-              return EasyRefresh(
-                child: ListView(
-                  children: <Widget>[
-                    WheelBanner(bannerList),
-                    TopNavigator(navigatorList),
-                    AdBanner(advertesPicture),
-                    LeaderPhone(leaderImage, leaderPhone),
-                    Recommend(recommendList),
-                    FloorTitle(floor1Title),
-                    FloorContent(floor1),
-                    FloorTitle(floor2Title),
-                    FloorContent(floor2),
-                    FloorTitle(floor3Title),
-                    FloorContent(floor3),
-                    _hotGoods(),
-                  ],
-                ),
-                loadMore: () async {
-                  print('======开始加载更多======');
-                  _getHotGoods();
-                },
-                refreshFooter: ClassicsFooter(
-                  key: _footerKey,
-                  bgColor: Colors.white,
-                  textColor: Colors.orange,
-                  moreInfoColor: Colors.orange,
-                  noMoreText: '',
-                ),
-              );
-
-            } else {
-              return Center(
-                child: LoadingDialog(
-                  text: "加载中...",
-                ),
-              );
-            }
-          }),
-    );
+    getContent('homePageContent', formData: fromData).then((val) {
+      setState(() {
+        data = json.decode(val.toString());
+      });
+    });
   }
 
   void _getHotGoods(){
@@ -137,7 +146,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
       List<Widget> listWidget = hotGoodsList.map((val) {
         return InkWell(
             onTap: () {
-              print('点击了火爆商品');
+              Application.router.navigateTo(context, Routes.goodsDetailPage + '?id=${val['goodsId']}');
             },
             child:
             Container(
