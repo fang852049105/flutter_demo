@@ -20,7 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin {
   String homePageContent = '正在获取数据';
-  int page = 1;
+  int page = 2;
   List<Map> hotGoodsList=[];
   GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
 

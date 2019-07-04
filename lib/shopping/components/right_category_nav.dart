@@ -46,7 +46,8 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     bool isHighLight = (index==Provide.value<ChildCategory>(context).childIndex);
     return InkWell(
       onTap: () {
-        Provide.value<ChildCategory>(context).changeChildIndex(index);
+        Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
+        Provide.value<ChildCategory>(context).changeChildIndex(index, item.mallSubId);
         _getGoodList(item.mallSubId);
       },
       child: Container(
@@ -72,7 +73,11 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     getContent('getMallGoods',formData:data ).then((val){
       var  data = json.decode(val.toString());
       CategoryGoodsListModel goodsList=  CategoryGoodsListModel.fromJson(data);
-      Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+      if (goodsList.data == null) {
+        Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+      } else {
+        Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+      }
 
     });
   }

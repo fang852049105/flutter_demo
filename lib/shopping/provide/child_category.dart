@@ -5,13 +5,18 @@ import 'package:flutter_demo/shopping/model/category_model.dart';
 class ChildCategory with ChangeNotifier{
 
   List<BxMallSubDto> childCategoryList = [];
-  int childIndex = 0;
-  String categoryId = '4';
+  int childIndex = 0; //子类索引值
+  String categoryId = '4';//大类ID
+  String subId = ''; //小类ID
+  int page = 1;
 
   setChildCategory(List<BxMallSubDto> list, String id) {
     categoryId = id;
+    childIndex = 0;
+    page = 1;
+    subId = '';
     BxMallSubDto all = BxMallSubDto();
-    all.mallSubId = '00';
+    all.mallSubId = '';
     all.mallCategoryId = '00';
     all.mallSubName = '全部';
     all.comments = 'null';
@@ -21,8 +26,15 @@ class ChildCategory with ChangeNotifier{
   }
 
   //改变子类索引
-  changeChildIndex(index){
-    childIndex=index;
+  changeChildIndex(int index, String id) {
+    subId = id;
+    page = 1;
+    childIndex = index;
     notifyListeners();
   }
+
+  addPage() {
+    page ++;
+  }
+
 }

@@ -75,7 +75,11 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     await getContent('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList =  CategoryGoodsListModel.fromJson(data);
-      Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+      if (goodsList.data == null) {
+        Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+      } else {
+        Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+      }
     });
   }
 
@@ -89,9 +93,10 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
 
         var childList = categoryList[index].bxMallSubDto;
         categoryId = categoryList[index].mallCategoryId;
+        Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
         Provide.value<ChildCategory>(context).setChildCategory(childList, categoryId);
-        Provide.value<ChildCategory>(context).changeChildIndex(0);
         _getGoodsList(categoryId: categoryId);
+
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
