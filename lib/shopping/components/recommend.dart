@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/routers/routes.dart';
+import 'package:flutter_demo/shopping/utils/NavigatorUtil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Recommend extends StatelessWidget {
@@ -29,9 +31,11 @@ class Recommend extends StatelessWidget {
   /**
    *  推荐商品item
    */
-  Widget _itemWidget(index) {
+  Widget _itemWidget(BuildContext context, index) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        NavigatorUtil.goTransitionFromRightPage(context, Routes.goodsDetailPage, 'id=${recommendList[index]['goodsId']}');
+      },
       child: Container(
         height: ScreenUtil().setHeight(340),
         width: ScreenUtil().setWidth(250),
@@ -62,14 +66,14 @@ class Recommend extends StatelessWidget {
   /**
    * 推荐商品横向列表
    */
-  Widget _recommendListWidget() {
+  Widget _recommendListWidget(BuildContext context) {
     return Container(
       height: ScreenUtil().setHeight(340),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: recommendList.length,
           itemBuilder: (context, index){
-            return _itemWidget(index);
+            return _itemWidget(context, index);
           }),
     );
   }
@@ -82,7 +86,7 @@ class Recommend extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _titleWidget(),
-          _recommendListWidget()
+          _recommendListWidget(context)
         ],
       ),
     );

@@ -40,6 +40,8 @@ dependencies:
   provide: ^1.0.2
   #路由管理
   fluro: "^1.5.0"
+  #html
+  flutter_html: ^0.10.4
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +58,7 @@ flutter:
 
   assets:
     - images/test1.png
+    - images/ic_loading.png
   # To add Flutter specific assets to your application, add an assets section, 
   # like this:
   # assets:

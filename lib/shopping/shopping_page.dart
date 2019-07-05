@@ -5,7 +5,6 @@ import 'package:flutter_demo/shopping/pages/category_page.dart';
 import 'package:flutter_demo/shopping/pages/home_page.dart';
 import 'package:flutter_demo/shopping/pages/member_page.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShoppingPage extends StatefulWidget {
   @override

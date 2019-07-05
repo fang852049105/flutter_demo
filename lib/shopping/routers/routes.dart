@@ -4,6 +4,7 @@ import 'package:flutter_demo/shopping/routers/router_handler.dart';
 
 class Routes {
   static String root = '/';
+  static String home = 'home';
   static String goodsDetailPage = 'good_detail';
 
   static void configureRoutes(Router router) {
