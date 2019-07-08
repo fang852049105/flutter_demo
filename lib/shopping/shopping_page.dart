@@ -4,7 +4,9 @@ import 'package:flutter_demo/shopping/pages/cart_page.dart';
 import 'package:flutter_demo/shopping/pages/category_page.dart';
 import 'package:flutter_demo/shopping/pages/home_page.dart';
 import 'package:flutter_demo/shopping/pages/member_page.dart';
+import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
+import 'package:provide/provide.dart';
 
 class ShoppingPage extends StatefulWidget {
   @override
@@ -39,7 +41,7 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
     CartPage(),
     MemberPage()
   ];
-//  int currentIndex = 0;
+ int currentIndex = 0;
 //  var currentPage;
 
 //方案二 TabBarView + Tabbar + TabController
@@ -70,9 +72,9 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
       myTabs.add(new Tab(text: tabData[i]['text'], icon: tabData[i]['icon']));
     }
     controller.addListener(() {
-      if (controller.indexIsChanging) {
-        _onTabChange();
-      }
+      currentIndex = controller.index;
+      print('=========== controller currentIndex = $currentIndex');
+      _onTabChange();
     });
     Application.controller = controller;
   }
@@ -95,35 +97,80 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
 //        children: tabPages
 //      ),
 //    );
-    return new Scaffold(
-      body: new TabBarView(controller: controller, children: tabPages),
-      bottomNavigationBar: Material(
-        color: Colors.white, //底部导航栏主题颜色
-        child: SafeArea(
-          child: Container(
-            height: 65,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: const Color(0xFFd0d0d0),
-                  blurRadius: 3.0,
-                  spreadRadius: 2.0,
-                  offset: Offset(-1.0, -1.0),
+
+    return Provide<TabIndexProvide>(
+      builder: (context, child, val) {
+        int index = Provide.value<TabIndexProvide>(context).currentIndex;
+        bool status = Provide.value<TabIndexProvide>(context).status;
+
+        print('=========== index = $index');
+        print('=========== currentIndex = $currentIndex');
+        if (index != -1 && status &&  currentIndex != index) {
+          controller.animateTo(index);
+          Provide.value<TabIndexProvide>(context).changeStatus();
+        }
+        print('=========== index = $index ========');
+        print('=========== currentIndex = $currentIndex =======');
+        return Scaffold(
+          body: new TabBarView(controller: controller, children: tabPages),
+          bottomNavigationBar: Material(
+            color: Colors.white, //底部导航栏主题颜色
+            child: SafeArea(
+              child: Container(
+                height: 65,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: const Color(0xFFd0d0d0),
+                      blurRadius: 3.0,
+                      spreadRadius: 2.0,
+                      offset: Offset(-1.0, -1.0),
+                    ),
+                  ],
                 ),
-              ],
+                child: TabBar(
+                    controller: controller,
+                    indicatorColor: Theme.of(context).primaryColor,
+                    indicatorWeight: 2.0,
+                    labelColor: Theme.of(context).primaryColor,
+                    unselectedLabelColor: Colors.black26,
+                    tabs: myTabs),
+              ),
             ),
-            child: TabBar(
-                controller: controller,
-                indicatorColor: Theme.of(context).primaryColor,
-                indicatorWeight: 2.0,
-                labelColor: Theme.of(context).primaryColor,
-                unselectedLabelColor: Colors.black26,
-                tabs: myTabs),
           ),
-        ),
-      ),
+        );
+      },
     );
+//    return new Scaffold(
+//      body: new TabBarView(controller: controller, children: tabPages),
+//      bottomNavigationBar: Material(
+//        color: Colors.white, //底部导航栏主题颜色
+//        child: SafeArea(
+//          child: Container(
+//            height: 65,
+//            decoration: BoxDecoration(
+//              color: Colors.white,
+//              boxShadow: <BoxShadow>[
+//                BoxShadow(
+//                  color: const Color(0xFFd0d0d0),
+//                  blurRadius: 3.0,
+//                  spreadRadius: 2.0,
+//                  offset: Offset(-1.0, -1.0),
+//                ),
+//              ],
+//            ),
+//            child: TabBar(
+//                controller: controller,
+//                indicatorColor: Theme.of(context).primaryColor,
+//                indicatorWeight: 2.0,
+//                labelColor: Theme.of(context).primaryColor,
+//                unselectedLabelColor: Colors.black26,
+//                tabs: myTabs),
+//          ),
+//        ),
+//      ),
+//    );
   }
 
   void _onTabChange() {

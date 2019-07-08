@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/components/Goods_datail_web.dart';
+import 'package:flutter_demo/shopping/components/goods_detail_bottom.dart';
 import 'package:flutter_demo/shopping/components/goods_detail_tabs_view.dart';
 import 'package:flutter_demo/shopping/components/goods_detail_top_area.dart';
 import 'package:flutter_demo/shopping/components/loading_dialog.dart';
@@ -48,15 +49,24 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
 
   Widget _getBody() {
     if (goodsDtailInfo != null) {
-      return SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            GoodsDetailTopArea(goodsDtailInfo?.data?.goodInfo),
-            GoodsExplain(),
-            GoodsDetailTabView(),
-            GoodsDetailWeb()
-          ],
-        ),
+      return Stack (
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                GoodsDetailTopArea(goodsDtailInfo?.data?.goodInfo),
+                GoodsExplain(),
+                GoodsDetailTabView(),
+                GoodsDetailWeb()
+              ],
+            ),
+          ),
+          Positioned(
+              bottom: 0,
+              left: 0,
+              child: GoodsDetailBottom(goodsDtailInfo?.data?.goodInfo),
+          )
+        ],
       );
     } else {
       return Center(

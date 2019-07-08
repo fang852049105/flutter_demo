@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/pages/cart_page.dart';
 import 'package:flutter_demo/shopping/pages/goods_detail_page.dart';
 
 var goodsDetailHanderl = Handler(

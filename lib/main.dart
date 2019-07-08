@@ -1,9 +1,11 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/provide/counter_provide.dart';
 import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
+import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
 import 'package:flutter_demo/shopping/routers/routes.dart';
 import 'package:provide/provide.dart';
@@ -25,12 +27,16 @@ void main() {
   var childCategory = ChildCategory();
   var categoryGoodsListProvide = CategoryGoodsListProvide();
   var goodsDetailInfoProvide = GoodsDetailInfoProvide();
+  var cartProvide = CartProvide();
+  var tabIndexProvide = TabIndexProvide();
   var providers = Providers();
   //将对象添加进providers
   providers..provide(Provider<Counter>.value(counter));
   providers..provide(Provider<ChildCategory>.value(childCategory));
   providers..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide));
   providers..provide(Provider<GoodsDetailInfoProvide>.value(goodsDetailInfoProvide));
+  providers..provide(Provider<CartProvide>.value(cartProvide));
+  providers..provide(Provider<TabIndexProvide>.value(tabIndexProvide));
   runApp(ProviderNode(child: _widgetForRoute(ui.window.defaultRouteName), providers: providers));
 }
 
