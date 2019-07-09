@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/components/cart_bottom.dart';
 import 'package:flutter_demo/shopping/components/cart_item.dart';
 import 'package:flutter_demo/shopping/components/loading_dialog.dart';
+import 'package:flutter_demo/shopping/model/cart_info_model.dart';
 import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:provide/provide.dart';
 
 
 class CartPage extends StatelessWidget {
+  List<CartInfoModel> cartList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,29 +19,50 @@ class CartPage extends StatelessWidget {
       body: FutureBuilder(
         future: _getCartInfo(context),
         builder: (context, snapshot) {
-          List cartList = Provide.value<CartProvide>(context).cartList;
+          cartList = Provide.value<CartProvide>(context).cartList;
           if (snapshot.hasData && cartList != null) {
-            return Stack(
-              children: <Widget>[
-                Provide<CartProvide>(
-                    builder: (context,child,childCategory){
-                      cartList= Provide.value<CartProvide>(context).cartList;
-                      print(cartList);
-                      return ListView.builder(
-                        itemCount: cartList.length,
-                        itemBuilder: (context,index){
-                          return CartItem(cartList[index]);
-                        },
-                      );
-                    }
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  child: CartBottom(),
-                )
-              ],
+            return Provide<CartProvide>(
+              builder: (context, child, val) {
+                cartList = Provide.value<CartProvide>(context).cartList;
+                print(cartList);
+                return Stack(
+                  children: <Widget>[
+                    ListView.builder(
+                      itemCount: cartList.length,
+                      itemBuilder: (context, index) {
+                        return CartItem(cartList[index]);
+                      },
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: CartBottom(cartList),
+                    )
+                  ],
+                );
+              }
             );
+//            return Stack(
+//              children: <Widget>[
+//                Provide<CartProvide>(
+//                    builder: (context, child, childCategory){
+//                      cartList = Provide.value<CartProvide>(context).cartList;
+//                      print(cartList);
+//                      return ListView.builder(
+//                        itemCount: cartList.length,
+//                        itemBuilder: (context,index){
+//                          return CartItem(cartList[index]);
+//                        },
+//                      );
+//                    }
+//                ),
+//                Positioned(
+//                  bottom: 0,
+//                  left: 0,
+//                  child: CartBottom(cartList),
+//                )
+//              ],
+//            );
           } else {
             return Center(
               child: LoadingDialog(

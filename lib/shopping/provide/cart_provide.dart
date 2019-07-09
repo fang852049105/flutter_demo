@@ -74,7 +74,7 @@ class CartProvide with ChangeNotifier {
       int tempIndex = 0;
       int delIndex = 0;
       for (var map in tempList) {
-        if (map['goodId'] == goodsId) {
+        if (map['goodsId'] == goodsId) {
           delIndex = tempIndex;
           break;
         }
@@ -84,6 +84,82 @@ class CartProvide with ChangeNotifier {
       cartStr = json.encode(tempList).toString();
       prefs.setString(CART_INFO, cartStr);
       await getCartInfo();
+      notifyListeners();
+    }
+  }
+
+  addGoodsNum(String goodsId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartStr = prefs.getString(CART_INFO);
+    if (cartStr != null) {
+      List<Map> tempList = (json.decode(cartStr.toString()) as List).cast<Map>();
+      for (var map in tempList) {
+        if (map['goodsId'] == goodsId) {
+          map['count'] ++;
+          break;
+        }
+      }
+      cartStr = json.encode(tempList).toString();
+      prefs.setString(CART_INFO, cartStr);
+      await getCartInfo();
+      notifyListeners();
+    }
+  }
+
+  reduceGoodsNum(String goodsId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartStr = prefs.getString(CART_INFO);
+    if (cartStr != null) {
+      List<Map> tempList = (json.decode(cartStr.toString()) as List).cast<Map>();
+      for (var map in tempList) {
+        if (map['goodsId'] == goodsId) {
+          if (map['count'] > 1) {
+            map['count'] --;
+          }
+          break;
+        }
+      }
+      cartStr = json.encode(tempList).toString();
+      prefs.setString(CART_INFO, cartStr);
+      await getCartInfo();
+      notifyListeners();
+    }
+  }
+
+  changeCheckStatus(String goodsId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartStr = prefs.getString(CART_INFO);
+    if (cartStr != null) {
+      List<Map> tempList = (json.decode(cartStr.toString()) as List).cast<Map>();
+      int tempIndex = 0;
+      int addIndex = 0;
+      for (var map in tempList) {
+        if (map['goodsId'] == goodsId) {
+          addIndex = tempIndex;
+          break;
+        }
+        tempIndex ++;
+      }
+      tempList[addIndex]['isCheck'] = !tempList[addIndex]['isCheck'];
+      cartStr = json.encode(tempList).toString();
+      prefs.setString(CART_INFO, cartStr);
+      await getCartInfo();
+      notifyListeners();
+    }
+  }
+
+  changeAllCheckStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartStr = prefs.getString(CART_INFO);
+    if (cartStr != null) {
+      List<Map> tempList = (json.decode(cartStr.toString()) as List).cast<Map>();
+      for (var map in tempList) {
+        map['isCheck'] = !map['isCheck'];
+      }
+      cartStr = json.encode(tempList).toString();
+      prefs.setString(CART_INFO, cartStr);
+      await getCartInfo();
+      notifyListeners();
     }
   }
 

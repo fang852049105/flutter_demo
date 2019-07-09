@@ -1,32 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/model/cart_info_model.dart';
+import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
 
 class GoodsNum extends StatelessWidget {
+
+  final CartInfoModel item;
+  GoodsNum(this.item);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtil().setWidth(165),
-      margin: EdgeInsets.only(top:5.0),
+      width: ScreenUtil().setWidth(210),
+      margin: EdgeInsets.only(top:10.0),
       decoration: BoxDecoration(
           border:Border.all(width: 1 , color:Colors.black12)
       ),
       child: Row(
         children: <Widget>[
-          _reduceBtn(),
+          _reduceBtn(context),
           _countArea(),
-          _addBtn(),
+          _addBtn(context),
         ],
       ),
     );
   }
 
   // 减少按钮
-  Widget _reduceBtn(){
+  Widget _reduceBtn(BuildContext context){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Provide.value<CartProvide>(context).reduceGoodsNum(item.goodsId);
+      },
       child: Container(
-        width: ScreenUtil().setWidth(45),
-        height: ScreenUtil().setHeight(45),
+        width: ScreenUtil().setWidth(50),
+        height: ScreenUtil().setHeight(50),
         alignment: Alignment.center,
 
         decoration: BoxDecoration(
@@ -41,12 +50,14 @@ class GoodsNum extends StatelessWidget {
   }
 
   //添加按钮
-  Widget _addBtn(){
+  Widget _addBtn(BuildContext context){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Provide.value<CartProvide>(context).addGoodsNum(item.goodsId);
+      },
       child: Container(
-        width: ScreenUtil().setWidth(45),
-        height: ScreenUtil().setHeight(45),
+        width: ScreenUtil().setWidth(50),
+        height: ScreenUtil().setHeight(50),
         alignment: Alignment.center,
 
         decoration: BoxDecoration(
@@ -63,11 +74,11 @@ class GoodsNum extends StatelessWidget {
   //中间数量显示区域
   Widget _countArea(){
     return Container(
-      width: ScreenUtil().setWidth(70),
-      height: ScreenUtil().setHeight(45),
+      width: ScreenUtil().setWidth(100),
+      height: ScreenUtil().setHeight(50),
       alignment: Alignment.center,
       color: Colors.white,
-      child: Text('1'),
+      child: Text(item.count.toString()),
     );
   }
 }

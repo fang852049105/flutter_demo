@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/model/cart_info_model.dart';
+import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
 
 class CartBottom extends StatelessWidget {
+
+  List<CartInfoModel> cartList = [];
+  CartBottom(this.cartList);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -10,7 +17,7 @@ class CartBottom extends StatelessWidget {
       width: ScreenUtil().setWidth(750),
       child: Row(
         children: <Widget>[
-          _selectAllBtn(),
+          _selectAllBtn(context),
           _allPriceArea(),
           _payButton()
         ],
@@ -18,14 +25,16 @@ class CartBottom extends StatelessWidget {
     );
   }
 
-  Widget _selectAllBtn() {
+  Widget _selectAllBtn(BuildContext context) {
     return Container(
       child: Row(
         children: <Widget>[
           Checkbox(
-            value: true,
+            value: getAllCheckStatus(),
             activeColor: Colors.pink,
-            onChanged: (bool val) {},
+            onChanged: (bool val) {
+              Provide.value<CartProvide>(context).changeAllCheckStatus();
+            },
           ),
           Text('全选')
         ],
@@ -51,7 +60,7 @@ class CartBottom extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 width: ScreenUtil().setWidth(150),
-                child: Text('￥1922',
+                child: Text('￥${getPrice()}',
                     style: TextStyle(
                       fontSize: ScreenUtil().setSp(36),
                       color: Colors.red,
@@ -87,7 +96,7 @@ class CartBottom extends StatelessWidget {
               borderRadius: BorderRadius.circular(3.0)
           ),
           child: Text(
-            '结算(6)',
+            '结算${cartList?.length}',
             style: TextStyle(
                 color: Colors.white
             ),
@@ -95,7 +104,27 @@ class CartBottom extends StatelessWidget {
         ),
       ) ,
     );
-
-
   }
+
+  String getPrice() {
+    double price = 0.0;
+    for (var cartInfoModel in cartList) {
+      if (cartInfoModel.isCheck) {
+        price = price + cartInfoModel.price * cartInfoModel.count;
+      }
+    }
+    return price.toString();
+  }
+
+  bool getAllCheckStatus() {
+    bool allCheckStatus = true;
+    for (var cartInfoModel in cartList) {
+     if (!cartInfoModel.isCheck) {
+       allCheckStatus = false;
+       break;
+     }
+    }
+    return allCheckStatus;
+  }
+
 }
