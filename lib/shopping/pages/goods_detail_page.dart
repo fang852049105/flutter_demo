@@ -52,6 +52,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
       return Stack (
         children: <Widget>[
           SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 65),
             child: Column(
               children: <Widget>[
                 GoodsDetailTopArea(goodsDtailInfo?.data?.goodInfo),

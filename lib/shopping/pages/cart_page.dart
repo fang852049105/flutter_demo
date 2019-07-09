@@ -27,12 +27,7 @@ class CartPage extends StatelessWidget {
                 print(cartList);
                 return Stack(
                   children: <Widget>[
-                    ListView.builder(
-                      itemCount: cartList.length,
-                      itemBuilder: (context, index) {
-                        return CartItem(cartList[index]);
-                      },
-                    ),
+                    _cartListWidget(),
                     Positioned(
                       bottom: 0,
                       left: 0,
@@ -70,6 +65,18 @@ class CartPage extends StatelessWidget {
               ),
             );
           }
+        },
+      ),
+    );
+  }
+
+  Widget _cartListWidget() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 60),
+      child: ListView.builder(
+        itemCount: cartList.length,
+        itemBuilder: (context, index) {
+          return CartItem(cartList[index]);
         },
       ),
     );
