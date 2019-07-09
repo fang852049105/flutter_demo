@@ -30,16 +30,13 @@ class _GoodsDetailTabViewState extends State<GoodsDetailTabView> with SingleTick
     return Container(
       margin: EdgeInsets.only(top: 10),
       color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          TabBar(
-              controller: _tabController,
-              indicatorColor: Theme.of(context).primaryColor,
-              indicatorWeight: 2.0,
-              labelColor: Theme.of(context).primaryColor,
-              unselectedLabelColor: Colors.black26,
-              tabs: myTabs),
-        ],
+      child: TabBar(
+          controller: _tabController,
+          indicatorColor: Theme.of(context).primaryColor,
+          indicatorWeight: 2.0,
+          labelColor: Theme.of(context).primaryColor,
+          unselectedLabelColor: Colors.black26,
+          tabs: myTabs
       ),
     );
   }
