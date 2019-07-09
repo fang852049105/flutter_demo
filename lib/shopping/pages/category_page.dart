@@ -33,6 +33,7 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
   }
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (categoryList != null && categoryList.length > 0) {
       return Scaffold(
         appBar: AppBar(

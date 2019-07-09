@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (data != null) {
       List<Map> bannerList = (data['data']['slides'] as List)
           .cast(); //cast() 类型提升；as 类型转换
