@@ -113,7 +113,7 @@ class CartBottom extends StatelessWidget {
         price = price + cartInfoModel.price * cartInfoModel.count;
       }
     }
-    return price.toString();
+    return price.toStringAsFixed(2);
   }
 
   bool getAllCheckStatus() {
