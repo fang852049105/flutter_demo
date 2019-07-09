@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/components/cart_bottom.dart';
 import 'package:flutter_demo/shopping/components/cart_item.dart';
+import 'package:flutter_demo/shopping/components/loading_dialog.dart';
 import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:provide/provide.dart';
 
@@ -39,7 +40,11 @@ class CartPage extends StatelessWidget {
               ],
             );
           } else {
-            return Text('加载中...');
+            return Center(
+              child: LoadingDialog(
+                text: "加载中...",
+              ),
+            );
           }
         },
       ),

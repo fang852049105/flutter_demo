@@ -74,7 +74,7 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
     controller.addListener(() {
       currentIndex = controller.index;
       print('=========== controller currentIndex = $currentIndex');
-      _onTabChange();
+      //_onTabChange();
     });
     Application.controller = controller;
   }
@@ -97,7 +97,6 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
 //        children: tabPages
 //      ),
 //    );
-
     return Provide<TabIndexProvide>(
       builder: (context, child, val) {
         int index = Provide.value<TabIndexProvide>(context).currentIndex;
@@ -142,35 +141,6 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
         );
       },
     );
-//    return new Scaffold(
-//      body: new TabBarView(controller: controller, children: tabPages),
-//      bottomNavigationBar: Material(
-//        color: Colors.white, //底部导航栏主题颜色
-//        child: SafeArea(
-//          child: Container(
-//            height: 65,
-//            decoration: BoxDecoration(
-//              color: Colors.white,
-//              boxShadow: <BoxShadow>[
-//                BoxShadow(
-//                  color: const Color(0xFFd0d0d0),
-//                  blurRadius: 3.0,
-//                  spreadRadius: 2.0,
-//                  offset: Offset(-1.0, -1.0),
-//                ),
-//              ],
-//            ),
-//            child: TabBar(
-//                controller: controller,
-//                indicatorColor: Theme.of(context).primaryColor,
-//                indicatorWeight: 2.0,
-//                labelColor: Theme.of(context).primaryColor,
-//                unselectedLabelColor: Colors.black26,
-//                tabs: myTabs),
-//          ),
-//        ),
-//      ),
-//    );
   }
 
   void _onTabChange() {

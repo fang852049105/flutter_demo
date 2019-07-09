@@ -8,6 +8,7 @@ import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
 import 'package:flutter_demo/shopping/routers/routes.dart';
+import 'package:flutter_demo/shopping/shopping_pageview.dart';
 import 'package:provide/provide.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_demo/main_page.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       //home: MainPage(),
-      home: ShoppingPage(),
+      home: ShoppingPageView(),
       onGenerateRoute: Application.router.generator, //生成路由
     );
   }

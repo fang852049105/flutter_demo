@@ -27,6 +27,7 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
 
   @override
   void initState() {
+    print('======CategoryPage 初始化======');
     _getCategory();
     super.initState();
   }
