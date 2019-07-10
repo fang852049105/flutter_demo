@@ -66,10 +66,17 @@ class CartItem extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: Column(
         children: <Widget>[
-          Text(item.goodsName),
+          _goodsNameText(item),
           GoodsNum(item)
         ],
       ),
+    );
+  }
+
+  Widget _goodsNameText(CartInfoModel item) {
+    return Container(
+      margin: EdgeInsets.only(left: 10),
+      child: Text(item.goodsName),
     );
   }
 

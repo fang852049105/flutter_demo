@@ -21,7 +21,7 @@ class LeaderPhone extends StatelessWidget {
     return Container(
       child: InkWell(
         onTap: _launchURL,
-        child: Image.network(leaderPhone),
+        child: Image.network(leaderImage),
       ),
     );
   }
