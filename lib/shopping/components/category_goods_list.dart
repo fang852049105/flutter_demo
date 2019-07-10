@@ -51,13 +51,20 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
                     moreInfoColor: Colors.pink,
                     noMoreText: '',
                   ),
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: data.goodsList.length,
-                    itemBuilder: (context, index) {
-                      return _ListWidget(data.goodsList, index);
-                    },
-                  ),
+//                  child: ListView.builder(
+////                    controller: _scrollController,
+////                    itemCount: data.goodsList.length,
+////                    itemBuilder: (context, index) {
+////                      return _ListWidget(data.goodsList, index);
+////                    },
+////                  ),
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: 2 / 3,
+                      children: data.goodsList.map((item) {
+                        return _listItem(item);
+                      }).toList(),
+                    ),
                   loadMore: _loadMore
                 )
 
@@ -100,6 +107,90 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
   }
 
+  Widget _listItem(CategoryListData item) {
+    return InkWell(
+      onTap: (){
+        NavigatorUtil.goTransitionFromRightPage(context, Routes.goodsDetailPage,'id=${item.goodsId}');
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 5.0,bottom: 5.0),
+        width: ScreenUtil().setWidth(285),
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            _goodsImage2(item),
+            _goodsInfo2(item),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Widget _goodsImage2(CategoryListData item){
+
+    return  Container(
+      margin: EdgeInsets.only(top: 10),
+      width: ScreenUtil().setWidth(300),
+      child: FadeInImage.assetNetwork(
+        placeholder: "images/ic_loading.png",
+        image: item.image,
+        height: ScreenUtil().setHeight(250),
+        fit: BoxFit.fill,
+      ),
+    );
+
+  }
+
+  Widget _goodsInfo2(CategoryListData item) {
+    return Container(
+      width: ScreenUtil().setWidth(285),
+      child: Column(
+        children: <Widget>[
+          _goodsName2(item),
+          _goodsPrice2(item)
+        ],
+      ),
+    );
+  }
+
+  Widget _goodsName2(CategoryListData item){
+    return Container(
+      padding: EdgeInsets.only(left: 5, top: 10),
+      width: ScreenUtil().setWidth(285),
+      child: Text(
+        item.goodsName,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontSize: ScreenUtil().setSp(26), color: Colors.pink),
+      ),
+    );
+  }
+
+  Widget _goodsPrice2(CategoryListData item){
+    return  Container(
+        margin: EdgeInsets.only(left: 5, top:20),
+        width: ScreenUtil().setWidth(285),
+        child :Row(
+            children: <Widget>[
+              Text(
+                '￥${item.presentPrice}  ',
+                style: TextStyle(color:Colors.black,fontSize:ScreenUtil().setSp(24)),
+              ),
+              Text(
+                '￥${item.oriPrice}',
+                style: TextStyle(
+                    color: Colors.black26,
+                    decoration: TextDecoration.lineThrough,
+                    fontSize:ScreenUtil().setSp(24)
+                ),
+              )
+            ]
+        )
+    );
+  }
+  
+
   Widget _ListWidget(List<CategoryListData> newList,int index){
 
     return InkWell(
@@ -117,8 +208,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
           child: Row(
             children: <Widget>[
-              _goodsImage(newList,index)
-              ,
+              _goodsImage(newList,index),
               Column(
                 children: <Widget>[
                   _goodsName(newList,index),
