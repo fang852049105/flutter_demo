@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_demo/shopping/config/service_url.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
 
@@ -38,14 +39,12 @@ class HttpUtil {
   }
 
   //get请求
-  get(String url, Function successCallBack,
-      {params, Function errorCallBack}) async {
+  get(String url, {params, Function successCallBack, Function errorCallBack}) async {
     _requstHttp(url, successCallBack, GET, params, errorCallBack);
   }
 
   //post请求
-  post(String url, Function successCallBack,
-      {params, Function errorCallBack}) async {
+  post(String url, {params, Function successCallBack, Function errorCallBack}) async {
     _requstHttp(url, successCallBack, POST, params, errorCallBack);
   }
 
@@ -64,9 +63,9 @@ class HttpUtil {
         }
       } else if (method == POST) {
         if (params != null && params.isNotEmpty) {
-          response = await dio.post(url, data: params);
+          response = await dio.post(servicePath[url], data: params);
         } else {
-          response = await dio.post(url);
+          response = await dio.post(servicePath[url]);
         }
       }
 
