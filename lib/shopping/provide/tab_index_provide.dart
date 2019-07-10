@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TabIndexProvide with ChangeNotifier {
   int currentIndex = -1;
   bool status = false;
+  String categoryId = "";
 
   changeIndex(int newIndex) {
     status = true;
@@ -13,5 +14,10 @@ class TabIndexProvide with ChangeNotifier {
   changeStatus() {
     status = false;
     currentIndex = -1;
+  }
+
+  changeCategoryId(String newCategoryId) {
+    categoryId = newCategoryId;
+    notifyListeners();
   }
 }

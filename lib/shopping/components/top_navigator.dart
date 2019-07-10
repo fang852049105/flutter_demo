@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
 
 class TopNavigator extends StatelessWidget {
   final List navigatorList;
@@ -9,6 +11,8 @@ class TopNavigator extends StatelessWidget {
   Widget _gridViewItemUI(BuildContext context, item) {
     return InkWell(
       onTap: () {
+        Provide.value<TabIndexProvide>(context).changeIndex(1);
+        Provide.value<TabIndexProvide>(context).changeCategoryId(item['mallCategoryId']);
         print('点击了导航');
       },
       child: Column(

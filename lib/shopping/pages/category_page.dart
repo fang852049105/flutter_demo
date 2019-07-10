@@ -9,6 +9,7 @@ import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/model/category_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
+import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_demo/shopping/utils/http_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,19 +48,36 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
         appBar: AppBar(
           title: Text('商品分类'),
         ),
-        body: Container(
-          child: Row(
-            children: <Widget>[
-              LeftCategoryNav(categoryList),
-              Column(
+        body: Provide<TabIndexProvide>(
+          builder: (context, child, val) {
+            return Container(
+              child: Row(
                 children: <Widget>[
-                  RightCategoryNav(),
-                  CategoryGoodsList()
+                  LeftCategoryNav(categoryList, val.categoryId),
+                  Column(
+                    children: <Widget>[
+                      RightCategoryNav(),
+                      CategoryGoodsList()
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
+              ),
+            );
+          },
         ),
+//        body: Container(
+//          child: Row(
+//            children: <Widget>[
+//              LeftCategoryNav(categoryList, '4'),
+//              Column(
+//                children: <Widget>[
+//                  RightCategoryNav(),
+//                  CategoryGoodsList()
+//                ],
+//              )
+//            ],
+//          ),
+//        ),
       );
     } else {
       return Center(

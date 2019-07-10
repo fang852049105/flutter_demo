@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
 import 'package:flutter_demo/shopping/model/category_model.dart';
 import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
+import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
@@ -14,7 +16,8 @@ import 'loading_dialog.dart';
 
 class LeftCategoryNav extends StatefulWidget {
   List<CategoryBigModel> categoryList = [];
-  LeftCategoryNav(this.categoryList, {Key key}): super(key: key);
+  String categoryId = '4';
+  LeftCategoryNav(this.categoryList, this.categoryId, {Key key}): super(key: key);
 
   @override
   _LeftCategoryNavState createState() => _LeftCategoryNavState();
@@ -22,8 +25,8 @@ class LeftCategoryNav extends StatefulWidget {
 
 class _LeftCategoryNavState extends State<LeftCategoryNav> {
   //List<CategoryBigModel> categoryList = [];
-  var listIndex = 0; //索引
-  String categoryId = '4';
+  //var listIndex = 0; //索引
+  //String categoryId = '4';
 
   @override
   void initState() {
@@ -33,20 +36,66 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Container(
-      width: ScreenUtil().setWidth(180),
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(width: 1, color: Colors.black12)
-        )
-      ),
-      child: ListView.builder(
-        itemCount: widget.categoryList.length,
-        itemBuilder: (context, index) {
-          return _leftCategoryItem(index);
-        },
-      ),
+    return Provide<TabIndexProvide>(
+      builder: (context, child, val) {
+        if (!val?.categoryId.isEmpty) {
+          var childList = widget.categoryList[_getIndexForCategoryId(val.categoryId)].bxMallSubDto;
+          Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
+          Provide.value<ChildCategory>(context).setChildCategory(childList, val.categoryId);
+          _delayGetGoodsList(val.categoryId);
+        }
+        return Container(
+          width: ScreenUtil().setWidth(180),
+          decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(width: 1, color: Colors.black12)
+              )
+          ),
+          child: ListView.builder(
+            itemCount: widget.categoryList.length,
+            itemBuilder: (context, index) {
+              return _leftCategoryItem(index);
+            },
+          ),
+        );
+      },
     );
+
+
+//    return Container(
+//      width: ScreenUtil().setWidth(180),
+//      decoration: BoxDecoration(
+//        border: Border(
+//          right: BorderSide(width: 1, color: Colors.black12)
+//        )
+//      ),
+//      child: ListView.builder(
+//        itemCount: widget.categoryList.length,
+//        itemBuilder: (context, index) {
+//          return _leftCategoryItem(index);
+//        },
+//      ),
+//    );
+  }
+
+  int _getIndexForCategoryId(String categoryId) {
+    int index = 0;
+    if (categoryId.isEmpty) {
+      return index;
+    }
+    for (var categoryBigModel in widget.categoryList) {
+      if (categoryBigModel.mallCategoryId == categoryId) {
+        return index;
+      }
+      index ++;
+    }
+    return index;
+  }
+
+   _delayGetGoodsList(String categoryId) {
+    new Timer(Duration(milliseconds: 200) , () {
+      _getGoodsList(categoryId: categoryId);
+    });
   }
 
   void _getGoodsList({String categoryId}) async {
@@ -78,18 +127,18 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   }
 
   Widget _leftCategoryItem(int index) {
-    bool isHighLight = (index == listIndex);
+    bool isHighLight = (widget.categoryId == widget.categoryList[index]?.mallCategoryId);
     return InkWell(
       onTap: () {
         setState(() {
-          listIndex = index;
+          widget.categoryId = widget.categoryList[index]?.mallCategoryId;
         });
 
         var childList = widget.categoryList[index].bxMallSubDto;
-        categoryId = widget.categoryList[index].mallCategoryId;
+        //widget.categoryId = widget.categoryList[index].mallCategoryId;
         Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
-        Provide.value<ChildCategory>(context).setChildCategory(childList, categoryId);
-        _getGoodsList(categoryId: categoryId);
+        Provide.value<ChildCategory>(context).setChildCategory(childList, widget.categoryId);
+        _getGoodsList(categoryId: widget.categoryId);
 
       },
       child: Container(
