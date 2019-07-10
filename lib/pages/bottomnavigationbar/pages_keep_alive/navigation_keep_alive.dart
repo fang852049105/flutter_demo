@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages_keep_alive/airplay_screen.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages_keep_alive/email_screen.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages_keep_alive/home_screen.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages_keep_alive/pages_screen.dart';
+import 'package:flutter_demo/pages/bottomnavigationbar/pages_keep_alive/airplay_screen.dart';
+import 'package:flutter_demo/pages/bottomnavigationbar/pages_keep_alive/email_screen.dart';
+import 'package:flutter_demo/pages/bottomnavigationbar/pages_keep_alive/home_screen.dart';
+import 'package:flutter_demo/pages/bottomnavigationbar/pages_keep_alive/pages_screen.dart';
 
 class NavigationKeepAlive extends StatefulWidget {
 

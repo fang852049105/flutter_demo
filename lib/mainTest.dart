@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages/bottom_navigation_widget.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages_keep_alive/navigation_keep_alive.dart';
-import 'package:flutter_demo/scrollview/scroll_view.dart';
+import 'package:flutter_demo/pages/scrollview/scroll_view.dart';
 
 void main() => runApp(MyApp());
 

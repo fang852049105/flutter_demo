@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_demo/bottomnavigationbar/pages/bottom_navigation_widget.dart';
 import 'package:flutter_demo/layout_type.dart';
+import 'package:flutter_demo/pages/bottomnavigationbar/pages/bottom_navigation_widget.dart';
 import 'package:flutter_demo/pages/main_app_bar.dart';
-import 'package:flutter_demo/scrollview/scroll_view.dart';
+import 'package:flutter_demo/pages/scrollview/scroll_view.dart';
 import 'package:flutter_demo/shopping/shopping_page.dart';
 
 class Route {
