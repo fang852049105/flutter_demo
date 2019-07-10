@@ -60,6 +60,7 @@ flutter:
   assets:
     - images/test1.png
     - images/ic_loading.png
+    - images/ic_oval.png
   # To add Flutter specific assets to your application, add an assets section, 
   # like this:
   # assets:
