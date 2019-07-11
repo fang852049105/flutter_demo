@@ -41,13 +41,13 @@ class _ShoppingPageViewState extends State<ShoppingPageView> with SingleTickerPr
   void initState() {
     currentPage = tabPages[currentIndex];
     _pageController = PageController();
-    _pageController.addListener((){
-      if (currentPage != _pageController.page.round()) {
-        setState(() {
-          currentPage = _pageController.page.round();
-        });
-      }
-    });
+//    _pageController.addListener((){
+//      if (currentPage != _pageController.page.round()) {
+//        setState(() {
+//          currentPage = _pageController.page.round();
+//        });
+//      }
+//    });
     for (int i = 0; i < tabData.length; i++) {
       myTabs.add(new Tab(text: tabData[i]['text'], icon: tabData[i]['icon']));
     }
@@ -72,7 +72,7 @@ class _ShoppingPageViewState extends State<ShoppingPageView> with SingleTickerPr
         if (index != -1 && status &&  currentIndex != index) {
           _tabController.animateTo(index);
           _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
-          Provide.value<TabIndexProvide>(context).changeStatus();
+          //Provide.value<TabIndexProvide>(context).changeStatus();
         }
         print('=========== index = $index ========');
         print('=========== currentIndex = $currentIndex =======');
