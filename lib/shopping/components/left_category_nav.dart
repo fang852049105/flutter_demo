@@ -38,7 +38,8 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Provide<TabIndexProvide>(
       builder: (context, child, val) {
-        if (!val?.categoryId.isEmpty) {
+        String currentCategoryId = Provide.value<ChildCategory>(context).categoryId;
+        if (!val?.categoryId.isEmpty && currentCategoryId != val?.categoryId) {
           var childList = widget.categoryList[_getIndexForCategoryId(val.categoryId)].bxMallSubDto;
           Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
           Provide.value<ChildCategory>(context).setChildCategory(childList, val.categoryId);

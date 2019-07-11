@@ -53,7 +53,7 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
             return Container(
               child: Row(
                 children: <Widget>[
-                  LeftCategoryNav(categoryList, val.categoryId),
+                  LeftCategoryNav(categoryList, val.categoryId.isEmpty ? '4' : val.categoryId),
                   Column(
                     children: <Widget>[
                       RightCategoryNav(),

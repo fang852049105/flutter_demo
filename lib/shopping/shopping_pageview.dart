@@ -5,6 +5,7 @@ import 'package:flutter_demo/shopping/pages/category_page.dart';
 import 'package:flutter_demo/shopping/pages/home_page.dart';
 import 'package:flutter_demo/shopping/pages/member_page.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 
 class ShoppingPageView extends StatefulWidget {
@@ -60,6 +61,7 @@ class _ShoppingPageViewState extends State<ShoppingPageView> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
     return Provide<TabIndexProvide>(
       builder: (context, child, val) {
         int index = Provide.value<TabIndexProvide>(context).currentIndex;

@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   int page = 2;
   List<Map> hotGoodsList=[];
   GlobalKey<RefreshFooterState> _footerKey = new GlobalKey<RefreshFooterState>();
+  GlobalKey<RefreshHeaderState> _headerKey = new GlobalKey<RefreshHeaderState>();
   var data = null;
 
   @override
@@ -84,11 +85,20 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               print('======开始加载更多======');
               _getHotGoods();
             },
+            onRefresh: () async{
+              print('======开始刷新=====');
+              _getPageContent();
+            } ,
+            refreshHeader: ClassicsHeader(
+              key: _headerKey,
+              bgColor: Colors.white,
+              textColor: Colors.pink,
+            ),
             refreshFooter: ClassicsFooter(
               key: _footerKey,
               bgColor: Colors.white,
-              textColor: Colors.orange,
-              moreInfoColor: Colors.orange,
+              textColor: Colors.pink,
+              moreInfoColor: Colors.pink,
               noMoreText: '',
             ),
           ),
@@ -109,6 +119,8 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     getContent('homePageContent', formData: fromData).then((val) {
       setState(() {
         data = json.decode(val.toString());
+        page = 2;
+        hotGoodsList = [];
       });
     });
   }
@@ -141,68 +153,67 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   );
 
   //火爆专区子项
-  Widget _wrapList(){
-    if (hotGoodsList.length != 0) {
-      List<Widget> listWidget = hotGoodsList.map((val) {
-        return InkWell(
-            onTap: () {
-              Application.router.navigateTo(context, Routes.goodsDetailPage + '?id=${val['goodsId']}');
-            },
-            child:
-            Container(
-              width: ScreenUtil().setWidth(372),
-              color: Colors.white,
-              padding: EdgeInsets.all(5.0),
-              margin: EdgeInsets.only(bottom: 3.0),
-              child: Column(
-                children: <Widget>[
-                  Image.network(
-                    val['image'], width: ScreenUtil().setWidth(375),),
-                  Text(
-                    val['name'],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Colors.pink, fontSize: ScreenUtil().setSp(26)),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text('￥${val['mallPrice']}'),
-                      Text(
-                        '￥${val['price']}',
-                        style: TextStyle(color: Colors.black26,
-                            decoration: TextDecoration.lineThrough),
+  Widget _wrapList() {
+    List<Widget> listWidget = hotGoodsList.map((val) {
+      return InkWell(
+          onTap: () {
+            Application.router.navigateTo(
+                context, Routes.goodsDetailPage + '?id=${val['goodsId']}');
+          },
+          child:
+          Container(
+            width: ScreenUtil().setWidth(372),
+            color: Colors.white,
+            padding: EdgeInsets.all(5.0),
+            margin: EdgeInsets.only(bottom: 3.0),
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                  val['image'], width: ScreenUtil().setWidth(375),),
+                Text(
+                  val['name'],
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.pink, fontSize: ScreenUtil().setSp(26)),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text('￥${val['mallPrice']}'),
+                    Text(
+                      '￥${val['price']}',
+                      style: TextStyle(color: Colors.black26,
+                          decoration: TextDecoration.lineThrough),
 
-                      )
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  )
-                ],
-              ),
-            )
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                )
+              ],
+            ),
+          )
 
-        );
-      }).toList();
-
-      return Wrap(
-        spacing: 2,
-        children: listWidget,
       );
-    }else{
-      return Text(' ');
-    }
-  }
+    }).toList();
+
+    return Wrap(
+      spacing: 2,
+      children: listWidget,
+    );
+}
 
   Widget _hotGoods(){
-
-    return Container(
-
-        child:Column(
-          children: <Widget>[
-            hotTitle,
-            _wrapList(),
-          ],
-        )
-    );
+    if (hotGoodsList != null && !hotGoodsList.isEmpty) {
+      return Container(
+          child: Column(
+            children: <Widget>[
+              hotTitle,
+              _wrapList(),
+            ],
+          )
+      );
+    } else {
+      return Text('');
+    }
   }
 }
