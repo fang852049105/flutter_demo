@@ -39,12 +39,13 @@ class MemberPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: EdgeInsets.only(top: 20),
             child: ClipOval(
-                child: Image.asset('images/ic_oval.png',
-                    width: ScreenUtil().setWidth(150),
-                    height: ScreenUtil().setWidth(150)
-            ),
+              child: Image.asset('images/ic_oval.png',
+                width: ScreenUtil().setWidth(150),
+                height: ScreenUtil().setWidth(150),
+                fit:BoxFit.fill,
+              ),
             ),
           ),
           Container(
