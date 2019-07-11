@@ -58,7 +58,7 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
                 GoodsDetailTopArea(goodsDtailInfo?.data?.goodInfo),
                 GoodsExplain(),
                 GoodsDetailTabView(),
-                GoodsDetailWeb()
+                //GoodsDetailWeb()
               ],
             ),
           ),

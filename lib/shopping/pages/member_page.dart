@@ -138,19 +138,34 @@ class MemberPage extends StatelessWidget {
   }
 
   Widget _otherTile(String title){
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-              bottom:BorderSide(width: 1,color:Colors.black12)
-          )
-      ),
-      child: ListTile(
-        leading: Icon(Icons.blur_circular),
-        title: Text(title),
-        trailing: Icon(Icons.arrow_right),
+    return Card(
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(
+                bottom:BorderSide(width: 1,color:Colors.black12)
+            )
+        ),
+        child: ListTile(
+          leading: Icon(Icons.blur_circular),
+          title: Text(title),
+          trailing: Icon(Icons.arrow_right),
+        ),
       ),
     );
+//    return Container(
+//      decoration: BoxDecoration(
+//          color: Colors.white,
+//          border: Border(
+//              bottom:BorderSide(width: 1,color:Colors.black12)
+//          )
+//      ),
+//      child: ListTile(
+//        leading: Icon(Icons.blur_circular),
+//        title: Text(title),
+//        trailing: Icon(Icons.arrow_right),
+//      ),
+//    );
   }
 
   Widget _otherTiles(){
