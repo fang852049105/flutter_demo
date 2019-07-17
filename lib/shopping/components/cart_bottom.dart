@@ -6,7 +6,7 @@ import 'package:provide/provide.dart';
 
 class CartBottom extends StatelessWidget {
 
-  List<CartInfoModel> cartList = [];
+  final List<CartInfoModel> cartList;
   CartBottom(this.cartList);
 
   @override

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_demo/example/child_access_forefather_state.dart';
+import 'package:flutter_demo/example/father_access_child_state.dart';
 import 'package:flutter_demo/layout_type.dart';
 import 'package:flutter_demo/pages/bottomnavigationbar/pages/bottom_navigation_widget.dart';
 import 'package:flutter_demo/pages/main_app_bar.dart';
@@ -66,8 +68,8 @@ List<Route> allContacts = [
   Route(name: 'sendMessageToPlatfrom', widget: new ScrollControllerTestRoute(), voidCallback: sendMessageToPlatfrom),
   Route(name: 'receiveMessageFromPlatfrom', widget: new BottomNavigationWidget()),
   Route(name: 'shopping', widget: new ShoppingPage()),
-  Route(name: 'Carson Cupps', widget: new ScrollControllerTestRoute()),
-  Route(name: 'Devora Nantz', widget: new ScrollControllerTestRoute()),
+  Route(name: 'Father Access Child State', widget: new FatherAccessChildStateWidget()),
+  Route(name: 'child Access Forefather State', widget: new ChildAccessForeFatherStateWidget()),
   Route(name: 'Tyisha Primus', widget: new ScrollControllerTestRoute()),
   Route(name: 'Muriel Lewellyn', widget: new ScrollControllerTestRoute()),
   Route(name: 'Hunter Giraud', widget: new ScrollControllerTestRoute()),

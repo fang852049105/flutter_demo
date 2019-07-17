@@ -20,7 +20,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  LayoutGroup _layoutGroup = LayoutGroup.nonScrollable;
+  LayoutGroup _layoutGroup = LayoutGroup.scrollable;
   LayoutType _layoutSelection1 = LayoutType.rowColumn;
   LayoutType _layoutSelection2 = LayoutType.pageView;
 
@@ -62,10 +62,10 @@ class _MainPageState extends State<MainPage> {
     } else {
       switch (index) {
         case 0:
-          _onLayoutSelected(LayoutType.pageView);
+          _onLayoutSelected(LayoutType.list);
           break;
         case 1:
-          _onLayoutSelected(LayoutType.list);
+          _onLayoutSelected(LayoutType.pageView);
           break;
         case 2:
           _onLayoutSelected(LayoutType.slivers);
@@ -167,10 +167,9 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         items: [
           _buildItem(
-              icon: Icons.view_week, layoutSelection: LayoutType.pageView),
+              icon: Icons.format_list_bulleted, layoutSelection: LayoutType.list),
           _buildItem(
-              icon: Icons.format_list_bulleted,
-              layoutSelection: LayoutType.list),
+              icon: Icons.view_week, layoutSelection: LayoutType.pageView),
           _buildItem(
               icon: Icons.view_day, layoutSelection: LayoutType.slivers),
           _buildItem(

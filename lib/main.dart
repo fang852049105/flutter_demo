@@ -50,8 +50,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      //home: MainPage(),
-      home: ShoppingPageView(),
+      home: MainPage(),
+      //home: ShoppingPageView(),
       onGenerateRoute: Application.router.generator, //生成路由
     );
   }
