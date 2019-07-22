@@ -22,7 +22,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   LayoutGroup _layoutGroup = LayoutGroup.scrollable;
   LayoutType _layoutSelection1 = LayoutType.rowColumn;
-  LayoutType _layoutSelection2 = LayoutType.pageView;
+  LayoutType _layoutSelection2 = LayoutType.list;
 
   void _onLayoutGroupToggle() {
     setState(() {
@@ -157,8 +157,7 @@ class _MainPageState extends State<MainPage> {
           _buildItem(
               icon: Icons.line_weight, layoutSelection: LayoutType.expanded),
           _buildItem(
-              icon: Icons.format_line_spacing,
-              layoutSelection: LayoutType.padding),
+              icon: Icons.format_line_spacing, layoutSelection: LayoutType.padding),
         ],
         onTap: _onSelectTab,
       );

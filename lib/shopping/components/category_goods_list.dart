@@ -131,7 +131,6 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
     return  Container(
       margin: EdgeInsets.only(top: 10),
-      width: ScreenUtil().setWidth(300),
       child: FadeInImage.assetNetwork(
         placeholder: "images/ic_loading.png",
         image: item.image,

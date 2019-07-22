@@ -7,6 +7,7 @@ import 'package:flutter_demo/pages/bottomnavigationbar/pages/bottom_navigation_w
 import 'package:flutter_demo/pages/main_app_bar.dart';
 import 'package:flutter_demo/pages/scrollview/scroll_view.dart';
 import 'package:flutter_demo/shopping/shopping_page.dart';
+import 'package:flutter_demo/shopping/shopping_pageview.dart';
 
 class Route {
   Route({this.name, this.widget, this.voidCallback});
@@ -67,7 +68,7 @@ List<Route> allContacts = [
   Route(name: 'Jump To Native Page',  widget: new ScrollControllerTestRoute(), voidCallback: jumpToNativePage),
   Route(name: 'sendMessageToPlatfrom', widget: new ScrollControllerTestRoute(), voidCallback: sendMessageToPlatfrom),
   Route(name: 'receiveMessageFromPlatfrom', widget: new BottomNavigationWidget()),
-  Route(name: 'shopping', widget: new ShoppingPage()),
+  Route(name: 'shopping', widget: new ShoppingPageView()),
   Route(name: 'Father Access Child State', widget: new FatherAccessChildStateWidget()),
   Route(name: 'child Access Forefather State', widget: new ChildAccessForeFatherStateWidget()),
   Route(name: 'Tyisha Primus', widget: new ScrollControllerTestRoute()),

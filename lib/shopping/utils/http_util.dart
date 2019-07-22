@@ -26,16 +26,16 @@ class HttpUtil {
       receiveTimeout: 100000,
       contentType: ContentType.parse('application/x-www-form-urlencoded'),
     ));
-//    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-//      // config the http client
-//      client.findProxy = (uri) {
-//        //proxy all request to localhost:8888
-//        return "PROXY 10.1.133.227:8888";
-//      };
-//      client.badCertificateCallback =
-//          (X509Certificate cert, String host, int port) => true;
-//
-//    };
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+      // config the http client
+      client.findProxy = (uri) {
+        //proxy all request to localhost:8888
+        return "PROXY 10.1.133.227:8888";
+      };
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+
+    };
   }
 
   //get请求

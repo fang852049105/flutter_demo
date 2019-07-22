@@ -24,6 +24,10 @@ class NavigatorUtil {
   /// 跳转到 转场动画 页面 ， 这边只展示 inFromRight ，剩下的自己去尝试下，
   /// 框架自带的有 native，nativeModal，inFromLeft，inFromRight，inFromBottom，fadeIn，custom
   static Future goTransitionFromRightPage(BuildContext context, String router, String params) {
+    ///路由跳转navigateTo()逻辑：
+    /// 1、根据path从RouteTree中找到对应的AppRouteMatch
+    /// 2、根据AppRouteMatch构建RouteMatch
+    //、  3、使用RouteMatch中的route发起Navigator跳转。
     return Application.router.navigateTo(
         context, router + '?' + params,
         /// 指定了 转场动画
