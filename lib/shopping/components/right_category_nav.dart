@@ -8,7 +8,7 @@ import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class RightCategoryNav extends StatefulWidget {
   _RightCategoryNavState createState() => _RightCategoryNavState();
@@ -18,8 +18,8 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Provide<ChildCategory>(
-          builder: (context, child, childCategory) {
+        child: Consumer<ChildCategory>(
+          builder: (context, childCategory, child) {
             return Container(
                 height: ScreenUtil().setHeight(80),
                 width: ScreenUtil().setWidth(570),
@@ -43,11 +43,11 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
   }
 
   Widget _rightInkWell(BxMallSubDto item, int index) {
-    bool isHighLight = (index==Provide.value<ChildCategory>(context).childIndex);
+    bool isHighLight = (index==Provider.of<ChildCategory>(context).childIndex);
     return InkWell(
       onTap: () {
-        Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
-        Provide.value<ChildCategory>(context).changeChildIndex(index, item.mallSubId);
+        Provider.of<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
+        Provider.of<ChildCategory>(context).changeChildIndex(index, item.mallSubId);
         _getGoodList(item.mallSubId);
       },
       child: Container(
@@ -65,7 +65,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
   void _getGoodList(String categorySubId) {
 
     var data = {
-      'categoryId':Provide.value<ChildCategory>(context).categoryId,
+      'categoryId':Provider.of<ChildCategory>(context).categoryId,
       'categorySubId':categorySubId,
       'page':1
     };
@@ -83,9 +83,9 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       var  data = json.decode(val.toString());
       CategoryGoodsListModel goodsList=  CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
-        Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+        Provider.of<CategoryGoodsListProvide>(context).setGoodsList([]);
       } else {
-        Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+        Provider.of<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
       }
       Navigator.pop(context);
     });
@@ -94,9 +94,9 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
 //      var  data = json.decode(val.toString());
 //      CategoryGoodsListModel goodsList=  CategoryGoodsListModel.fromJson(data);
 //      if (goodsList.data == null) {
-//        Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+//        Provider.of<CategoryGoodsListProvide>(context).setGoodsList([]);
 //      } else {
-//        Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+//        Provider.of<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
 //      }
 //    }, params: data);
   }

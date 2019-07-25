@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class GoodsBuyWidget extends StatelessWidget {
   @override
@@ -57,7 +57,7 @@ class GoodsBuyWidget extends StatelessWidget {
   }
 
   void addCart(BuildContext context) async {
-    var goodsInfo = Provide.value<GoodsDetailInfoProvide>(context).goodsDetailInfo.data.goodInfo;
+    var goodsInfo = Provider.of<GoodsDetailInfoProvide>(context).goodsDetailInfo.data.goodInfo;
     if (goodsInfo == null) {
       return;
     }
@@ -66,7 +66,7 @@ class GoodsBuyWidget extends StatelessWidget {
     var count = 1;
     var price = goodsInfo.presentPrice;
     var images = goodsInfo.image1;
-    await Provide.value<CartProvide>(context).save(goodsId, goodsName, count, price, images);
+    await Provider.of<CartProvide>(context).save(goodsId, goodsName, count, price, images);
 
   }
 }

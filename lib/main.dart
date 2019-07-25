@@ -9,7 +9,7 @@ import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
 import 'package:flutter_demo/shopping/routers/routes.dart';
 import 'package:flutter_demo/shopping/shopping_pageview.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_demo/main_page.dart';
 import 'package:flutter_demo/shopping/shopping_page.dart';
@@ -23,22 +23,43 @@ void main() {
   Application.router = router;
   //-------------------路由注册end
 
-  //将状态放入顶层
-  var counter = Counter();
-  var childCategory = ChildCategory();
-  var categoryGoodsListProvide = CategoryGoodsListProvide();
-  var goodsDetailInfoProvide = GoodsDetailInfoProvide();
-  var cartProvide = CartProvide();
-  var tabIndexProvide = TabIndexProvide();
-  var providers = Providers();
-  //将对象添加进providers
-  providers..provide(Provider<Counter>.value(counter));
-  providers..provide(Provider<ChildCategory>.value(childCategory));
-  providers..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide));
-  providers..provide(Provider<GoodsDetailInfoProvide>.value(goodsDetailInfoProvide));
-  providers..provide(Provider<CartProvide>.value(cartProvide));
-  providers..provide(Provider<TabIndexProvide>.value(tabIndexProvide));
-  runApp(ProviderNode(child: _widgetForRoute(ui.window.defaultRouteName), providers: providers));
+//  //将状态放入顶层
+//  var counter = Counter();
+//  var childCategory = ChildCategory();
+//  var categoryGoodsListProvide = CategoryGoodsListProvide();
+//  var goodsDetailInfoProvide = GoodsDetailInfoProvide();
+//  var cartProvide = CartProvide();
+//  var tabIndexProvide = TabIndexProvide();
+//  var providers = Providers();
+//  //将对象添加进providers
+//  providers..provide(Provider<Counter>.value(counter));
+//  providers..provide(Provider<ChildCategory>.value(childCategory));
+//  providers..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide));
+//  providers..provide(Provider<GoodsDetailInfoProvide>.value(goodsDetailInfoProvide));
+//  providers..provide(Provider<CartProvide>.value(cartProvide));
+//  providers..provide(Provider<TabIndexProvide>.value(tabIndexProvide));
+
+//  runApp(ProviderNode(child: _widgetForRoute(ui.window.defaultRouteName), providers: providers));
+  runApp(MultiProvider(
+      child: _widgetForRoute(ui.window.defaultRouteName),
+      providers: [
+        ChangeNotifierProvider(builder: (_) => Counter()),
+        ChangeNotifierProvider(builder: (_) => ChildCategory()),
+        ChangeNotifierProvider(builder: (_) => CategoryGoodsListProvide()),
+        ChangeNotifierProvider(builder: (_) => GoodsDetailInfoProvide()),
+        ChangeNotifierProvider(builder: (_) => TabIndexProvide()),
+        ChangeNotifierProvider(builder: (_) => CartProvide()),
+
+
+//        Provider<Counter>.value(value: counter),
+//        Provider<ChildCategory>.value(value: childCategory),
+//        Provider<CategoryGoodsListProvide>.value(value: categoryGoodsListProvide),
+//        Provider<GoodsDetailInfoProvide>.value(value: goodsDetailInfoProvide),
+//        Provider<CartProvide>.value(value: cartProvide),
+//        Provider<TabIndexProvide>.value(value: tabIndexProvide),
+      ])
+  );
+
 }
 
 class MyApp extends StatelessWidget {

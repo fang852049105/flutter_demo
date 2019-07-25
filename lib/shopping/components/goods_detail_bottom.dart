@@ -4,7 +4,7 @@ import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/utils/NavigatorUtil.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class GoodsDetailBottom extends StatelessWidget {
   GoodInfo goodsInfo = null;
@@ -32,8 +32,8 @@ class GoodsDetailBottom extends StatelessWidget {
           ),
           InkWell(
             onTap: (){
-              Provide.value<CartProvide>(context).save(goodsInfo.goodsId, goodsInfo.goodsName, 1, goodsInfo.presentPrice, goodsInfo.image1);
-              Provide.value<TabIndexProvide>(context).changeIndex(2);
+              Provider.of<CartProvide>(context).save(goodsInfo.goodsId, goodsInfo.goodsName, 1, goodsInfo.presentPrice, goodsInfo.image1);
+              Provider.of<TabIndexProvide>(context).changeIndex(2);
               NavigatorUtil.goBack(context);
             },
             child: Container(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/model/cart_info_model.dart';
 import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class CartBottom extends StatelessWidget {
 
@@ -33,7 +33,7 @@ class CartBottom extends StatelessWidget {
             value: getAllCheckStatus(),
             activeColor: Colors.pink,
             onChanged: (bool val) {
-              Provide.value<CartProvide>(context).changeAllCheckStatus();
+              Provider.of<CartProvide>(context).changeAllCheckStatus();
             },
           ),
           Text('全选')

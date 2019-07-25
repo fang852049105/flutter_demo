@@ -25,6 +25,10 @@ class ChildCategory with ChangeNotifier{
     notifyListeners();
   }
 
+  setCategory(String id) {
+    categoryId = id;
+  }
+
   //改变子类索引
   changeChildIndex(int index, String id) {
     subId = id;

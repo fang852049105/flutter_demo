@@ -37,7 +37,8 @@ dependencies:
   #下拉，上拉
   flutter_easyrefresh: ^1.2.7
   #状态管理
-  provide: ^1.0.2
+  #provide: ^1.0.2
+  provider: ^2.0.1
   #路由管理
   fluro: ^1.5.0
   #html

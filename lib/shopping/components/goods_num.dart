@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/model/cart_info_model.dart';
 import 'package:flutter_demo/shopping/provide/cart_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class GoodsNum extends StatelessWidget {
 
@@ -31,7 +31,7 @@ class GoodsNum extends StatelessWidget {
   Widget _reduceBtn(BuildContext context){
     return InkWell(
       onTap: (){
-        Provide.value<CartProvide>(context).reduceGoodsNum(item.goodsId);
+        Provider.of<CartProvide>(context).reduceGoodsNum(item.goodsId);
       },
       child: Container(
         width: ScreenUtil().setWidth(50),
@@ -53,7 +53,7 @@ class GoodsNum extends StatelessWidget {
   Widget _addBtn(BuildContext context){
     return InkWell(
       onTap: (){
-        Provide.value<CartProvide>(context).addGoodsNum(item.goodsId);
+        Provider.of<CartProvide>(context).addGoodsNum(item.goodsId);
       },
       child: Container(
         width: ScreenUtil().setWidth(50),

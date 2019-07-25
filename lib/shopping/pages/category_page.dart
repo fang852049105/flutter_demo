@@ -13,7 +13,7 @@ import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_demo/shopping/utils/http_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -48,8 +48,8 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
         appBar: AppBar(
           title: Text('商品分类'),
         ),
-        body: Provide<TabIndexProvide>(
-          builder: (context, child, val) {
+        body: Consumer<TabIndexProvide>(
+          builder: (context, val, child) {
             return Container(
               child: Row(
                 children: <Widget>[
@@ -121,7 +121,7 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
           CategoryBigListModel model = CategoryBigListModel.formJson(
               data['data']);
           categoryList = model.CategoryBigModelList;
-          Provide.value<ChildCategory>(context).setChildCategory(
+          Provider.of<ChildCategory>(context).setChildCategory(
               categoryList[0].bxMallSubDto, categoryList[0].mallCategoryId);
           _getGoodsList();
         },
@@ -145,9 +145,9 @@ class _CategoryPageState extends State<CategoryPage> with AutomaticKeepAliveClie
           CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(
               data);
           if (goodsList.data == null) {
-            Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+            Provider.of<CategoryGoodsListProvide>(context).setGoodsList([]);
           } else {
-            Provide.value<CategoryGoodsListProvide>(context).setGoodsList(
+            Provider.of<CategoryGoodsListProvide>(context).setGoodsList(
                 goodsList.data);
           }
           setState(() {

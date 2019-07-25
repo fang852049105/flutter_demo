@@ -9,7 +9,7 @@ import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 import 'loading_dialog.dart';
 
@@ -26,8 +26,7 @@ class LeftCategoryNav extends StatefulWidget {
 class _LeftCategoryNavState extends State<LeftCategoryNav> {
   //List<CategoryBigModel> categoryList = [];
   //var listIndex = 0; //索引
-  //String categoryId = '4';
-
+  _LeftCategoryNavState();
   @override
   void initState() {
     //_getCategory();
@@ -36,17 +35,16 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Provide<TabIndexProvide>(
-      builder: (context, child, val) {
-        String lastCategoryId = Provide.value<ChildCategory>(context).categoryId;
-        bool status = Provide.value<TabIndexProvide>(context).status;
+    return Consumer<TabIndexProvide>(
+      builder: (context, val, child) {
+        String lastCategoryId = Provider.of<ChildCategory>(context).categoryId;
+        bool status = Provider.of<TabIndexProvide>(context).status;
         if (!val?.categoryId.isEmpty && lastCategoryId != val?.categoryId && status) {
-          Provide.value<TabIndexProvide>(context).changeStatus();
+          Provider.of<TabIndexProvide>(context).changeStatus();
           var childList = widget.categoryList[_getIndexForCategoryId(val.categoryId)].bxMallSubDto;
-          Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
-          Provide.value<ChildCategory>(context).setChildCategory(childList, val.categoryId);
+          Provider.of<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
+          Provider.of<ChildCategory>(context).setChildCategory(childList, val.categoryId);
           _delayGetGoodsList(val.categoryId);
-
         }
         return Container(
           width: ScreenUtil().setWidth(180),
@@ -122,27 +120,28 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList =  CategoryGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
-        Provide.value<CategoryGoodsListProvide>(context).setGoodsList([]);
+        Provider.of<CategoryGoodsListProvide>(context).setGoodsList([]);
       } else {
-        Provide.value<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
+        Provider.of<CategoryGoodsListProvide>(context).setGoodsList(goodsList.data);
       }
       Navigator.pop(context);
     });
   }
 
   Widget _leftCategoryItem(int index) {
-    bool isHighLight = (widget.categoryId == widget.categoryList[index]?.mallCategoryId);
+    String categoryId = Provider.of<ChildCategory>(context).categoryId;
+    bool isHighLight = (categoryId == widget.categoryList[index]?.mallCategoryId);
     return InkWell(
       onTap: () {
         setState(() {
-          widget.categoryId = widget.categoryList[index]?.mallCategoryId;
+          categoryId = widget.categoryList[index]?.mallCategoryId;
+          Provider.of<ChildCategory>(context).setCategory(categoryId);
         });
 
         var childList = widget.categoryList[index].bxMallSubDto;
-        //widget.categoryId = widget.categoryList[index].mallCategoryId;
-        Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
-        Provide.value<ChildCategory>(context).setChildCategory(childList, widget.categoryId);
-        _getGoodsList(categoryId: widget.categoryId);
+        Provider.of<CategoryGoodsListProvide>(context).changeLoadMoreStatus(true);
+        Provider.of<ChildCategory>(context).setChildCategory(childList, categoryId);
+        _getGoodsList(categoryId: categoryId);
 
       },
       child: Container(

@@ -11,7 +11,7 @@ import 'package:flutter_demo/shopping/model/goods_detail_model.dart';
 import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
 import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class GoodsDetailPage extends StatefulWidget {
   final String goodsId;
@@ -83,11 +83,11 @@ class _GoodsDetailPageState extends State<GoodsDetailPage> {
     await getContent('getGoodDetailById', formData: formData).then((val) {
       var data = json.decode(val.toString());
       goodsDtailInfo = GoodsDetailModel.fromJson(data);
-      Provide.value<GoodsDetailInfoProvide>(context).setGoodsInfo(goodsDtailInfo);
+      Provider.of<GoodsDetailInfoProvide>(context).setGoodsInfo(goodsDtailInfo);
       setState(() {
       });
     });
-    Provide.value<GoodsDetailInfoProvide>(context).setGoodsInfo(goodsDtailInfo);
+    Provider.of<GoodsDetailInfoProvide>(context).setGoodsInfo(goodsDtailInfo);
   }
 
 }

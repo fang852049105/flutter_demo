@@ -10,7 +10,7 @@ import 'package:flutter_demo/shopping/utils/NavigatorUtil.dart';
 import 'package:flutter_demo/shopping/utils/toast_util.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class CategoryGoodsList extends StatefulWidget {
   @override
@@ -29,11 +29,11 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Provide<CategoryGoodsListProvide>(
-    builder: (context, child, data) {
+    return Consumer<CategoryGoodsListProvide>(
+    builder: (context, data, child) {
         if (data.goodsList.length > 0) {
           try {
-            if (Provide.value<ChildCategory>(context).page == 1) {
+            if (Provider.of<ChildCategory>(context).page == 1) {
               _scrollController.jumpTo(0.0);
             }
           } catch (e) {
@@ -78,7 +78,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   }
 
   Future _loadMore() async {
-    if (Provide.value<CategoryGoodsListProvide>(context).canLoadMore) {
+    if (Provider.of<CategoryGoodsListProvide>(context).canLoadMore) {
       return _getMoreList();
     } else {
       return null;
@@ -88,19 +88,19 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   //上拉加载更多的方法
   Future _getMoreList() async{
     var data={
-      'categoryId': Provide.value<ChildCategory>(context).categoryId,
-      'categorySubId': Provide.value<ChildCategory>(context).subId,
-      'page': Provide.value<ChildCategory>(context).page == 1 ? 2 : Provide.value<ChildCategory>(context).page
+      'categoryId': Provider.of<ChildCategory>(context).categoryId,
+      'categorySubId': Provider.of<ChildCategory>(context).subId,
+      'page': Provider.of<ChildCategory>(context).page == 1 ? 2 : Provider.of<ChildCategory>(context).page
     };
 
     getContent('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodsList = CategoryGoodsListModel.fromJson(data);
       if (goodsList.data != null) {
-        Provide.value<CategoryGoodsListProvide>(context).addGoodsList(goodsList.data);
-        Provide.value<ChildCategory>(context).addPage();
+        Provider.of<CategoryGoodsListProvide>(context).addGoodsList(goodsList.data);
+        Provider.of<ChildCategory>(context).addPage();
       } else {
-        Provide.value<CategoryGoodsListProvide>(context).changeLoadMoreStatus(false);
+        Provider.of<CategoryGoodsListProvide>(context).changeLoadMoreStatus(false);
         ToastUtil.getInstance().showToast("已经到底了");
       }
     });

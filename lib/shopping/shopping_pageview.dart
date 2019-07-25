@@ -6,7 +6,7 @@ import 'package:flutter_demo/shopping/pages/home_page.dart';
 import 'package:flutter_demo/shopping/pages/member_page.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingPageView extends StatefulWidget {
   @override
@@ -62,17 +62,17 @@ class _ShoppingPageViewState extends State<ShoppingPageView> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-    return Provide<TabIndexProvide>(
-      builder: (context, child, val) {
-        int index = Provide.value<TabIndexProvide>(context).currentIndex;
-        bool status = Provide.value<TabIndexProvide>(context).status;
+    return Consumer<TabIndexProvide>(
+      builder: (context, val, child) {
+        int index = Provider.of<TabIndexProvide>(context).currentIndex;
+        bool status = Provider.of<TabIndexProvide>(context).status;
 
         print('=========== index = $index');
         print('=========== currentIndex = $currentIndex');
         if (index != -1 && status &&  currentIndex != index) {
           _tabController.animateTo(index);
           _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.ease);
-          //Provide.value<TabIndexProvide>(context).changeStatus();
+          //Provider.of<TabIndexProvide>(context).changeStatus();
         }
         print('=========== index = $index ========');
         print('=========== currentIndex = $currentIndex =======');

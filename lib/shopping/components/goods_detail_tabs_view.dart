@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/components/Goods_datail_web.dart';
 import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class GoodsDetailTabView extends StatefulWidget {
   @override
@@ -28,7 +28,7 @@ class _GoodsDetailTabViewState extends State<GoodsDetailTabView> with SingleTick
     _tabController =  TabController(vsync: this, length: 2);// 和下面的 TabBar.tabs 数量对应
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
-        //Provide.value<GoodsDetailInfoProvide>(context).setIndxe(_tabController.index);
+        //Provider.of<GoodsDetailInfoProvide>(context).setIndxe(_tabController.index);
         print('tab index = ${_tabController.index}' );
         _pageController.jumpToPage(_tabController.index);
       }

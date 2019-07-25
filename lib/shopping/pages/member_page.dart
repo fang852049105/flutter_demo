@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/provide/counter_provide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class MemberPage extends StatelessWidget {
   @override
@@ -213,7 +213,7 @@ class MemberPage extends StatelessWidget {
 //    return Container(
 //        child: RaisedButton(
 //          onPressed: () {
-//            Provide.value<Counter>(context).increment();
+//            Provider.of<Counter>(context).increment();
 //          },
 //          child: Text('递增'),
 //        )

@@ -6,7 +6,7 @@ import 'package:flutter_demo/shopping/pages/home_page.dart';
 import 'package:flutter_demo/shopping/pages/member_page.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingPage extends StatefulWidget {
   @override
@@ -97,16 +97,16 @@ class _ShoppingPageState extends State<ShoppingPage> with SingleTickerProviderSt
 //        children: tabPages
 //      ),
 //    );
-    return Provide<TabIndexProvide>(
-      builder: (context, child, val) {
-        int index = Provide.value<TabIndexProvide>(context).currentIndex;
-        bool status = Provide.value<TabIndexProvide>(context).status;
+    return Consumer<TabIndexProvide>(
+      builder: (context, val, child) {
+        int index = Provider.of<TabIndexProvide>(context).currentIndex;
+        bool status = Provider.of<TabIndexProvide>(context).status;
 
         print('=========== index = $index');
         print('=========== currentIndex = $currentIndex');
         if (index != -1 && status &&  currentIndex != index) {
           controller.animateTo(index);
-          Provide.value<TabIndexProvide>(context).changeStatus();
+          Provider.of<TabIndexProvide>(context).changeStatus();
         }
         print('=========== index = $index ========');
         print('=========== currentIndex = $currentIndex =======');

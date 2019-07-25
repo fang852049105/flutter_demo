@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/model/goods_detail_model.dart';
 import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provide/provide.dart';
+import 'package:provider/provider.dart';
 
 class GoodsDetailTopArea extends StatelessWidget {
   GoodInfo goodsInfo = null;
@@ -25,7 +25,7 @@ class GoodsDetailTopArea extends StatelessWidget {
     );
 //    return Provide<GoodsDetailInfoProvide>(
 //      builder: (context, child, val) {
-//        var goodsInfo = Provide.value<GoodsDetailInfoProvide>(context).goodsInfo?.data?.goodInfo;
+//        var goodsInfo = Provider.of<GoodsDetailInfoProvide>(context).goodsInfo?.data?.goodInfo;
 //        if (goodsInfo != null) {
 //          return Container(
 //            color: Colors.white,
