@@ -5,6 +5,7 @@ import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/provide/counter_provide.dart';
 import 'package:flutter_demo/shopping/provide/goods_detail_info.dart';
+import 'package:flutter_demo/shopping/provide/page_loader_model.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
 import 'package:flutter_demo/shopping/routers/application.dart';
 import 'package:flutter_demo/shopping/routers/routes.dart';
@@ -43,15 +44,16 @@ void main() {
   runApp(MultiProvider(
       child: _widgetForRoute(ui.window.defaultRouteName),
       providers: [
-        ChangeNotifierProvider(builder: (_) => Counter()),
+        ChangeNotifierProvider(builder: (_) => Counter(),),
         ChangeNotifierProvider(builder: (_) => ChildCategory()),
         ChangeNotifierProvider(builder: (_) => CategoryGoodsListProvide()),
         ChangeNotifierProvider(builder: (_) => GoodsDetailInfoProvide()),
         ChangeNotifierProvider(builder: (_) => TabIndexProvide()),
         ChangeNotifierProvider(builder: (_) => CartProvide()),
+        ChangeNotifierProvider(builder: (_) => PageLoaderStateModel()),
 
 
-//        Provider<Counter>.value(value: counter),
+//       Provider<Counter>.value(value: counter),
 //        Provider<ChildCategory>.value(value: childCategory),
 //        Provider<CategoryGoodsListProvide>.value(value: categoryGoodsListProvide),
 //        Provider<GoodsDetailInfoProvide>.value(value: goodsDetailInfoProvide),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/pages/cart_page.dart';
 import 'package:flutter_demo/shopping/pages/category_page.dart';
+import 'package:flutter_demo/shopping/pages/category_page_provider.dart';
 import 'package:flutter_demo/shopping/pages/home_page.dart';
 import 'package:flutter_demo/shopping/pages/member_page.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
@@ -27,7 +28,7 @@ class _ShoppingPageViewState extends State<ShoppingPageView> with SingleTickerPr
 
   final List<Widget> tabPages = [
     HomePage(),
-    CategoryPage(),
+    CategoryPage2(),
     CartPage(),
     MemberPage()
   ];
