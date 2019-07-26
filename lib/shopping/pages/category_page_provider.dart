@@ -83,31 +83,6 @@ class _CategoryPage2State extends State<CategoryPage2> with AutomaticKeepAliveCl
    );
   }
 
-  Widget __errorWidget() {
-    String errorMsg = Provider.of<PageLoaderStateModel>(context).failMsg;
-    return Container(
-      width: ScreenUtil().setWidth(700),
-      height: ScreenUtil().setHeight(1000),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(errorMsg),
-          RaisedButton(
-            color: Colors.white70,
-            child: Text('点击重试',
-              style: TextStyle(
-                  color: Colors.pink,
-                  fontSize: 14
-              ),
-            ),
-            onPressed: () {
-              getCategory();
-            },
-          )
-        ],
-      ),
-    );
-  }
 
   void getCategory() async{
     _loaderStateModel.changeState(LoaderState.loading);
