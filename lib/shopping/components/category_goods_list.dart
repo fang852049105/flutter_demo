@@ -60,7 +60,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
 ////                  ),
                     child: GridView.count(
                       crossAxisCount: 2,
-                      childAspectRatio: 2 / 3,
+                      childAspectRatio: 2 / 3.5,
                       children: data.goodsList.map((item) {
                         return _listItem(item);
                       }).toList(),

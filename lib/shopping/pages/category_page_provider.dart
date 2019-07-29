@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/shopping/components/category_goods_list.dart';
 import 'package:flutter_demo/shopping/components/left_category_nav.dart';
 import 'package:flutter_demo/shopping/components/loader_container.dart';
-import 'package:flutter_demo/shopping/components/loading_dialog.dart';
 import 'package:flutter_demo/shopping/components/right_category_nav.dart';
 import 'package:flutter_demo/shopping/config/loader_state.dart';
 import 'package:flutter_demo/shopping/model/category_goods_list_model.dart';
@@ -14,9 +13,7 @@ import 'package:flutter_demo/shopping/provide/category_goods_list.dart';
 import 'package:flutter_demo/shopping/provide/child_category.dart';
 import 'package:flutter_demo/shopping/provide/page_loader_model.dart';
 import 'package:flutter_demo/shopping/provide/tab_index_provide.dart';
-import 'package:flutter_demo/shopping/service/service_method.dart';
 import 'package:flutter_demo/shopping/utils/http_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPage2 extends StatefulWidget {
@@ -39,10 +36,7 @@ class _CategoryPage2State extends State<CategoryPage2> with AutomaticKeepAliveCl
     print('======CategoryPage 初始化======');
     super.initState();
     new Timer(Duration(milliseconds: 200) , () {
-      final loaderStateModel = Provider.of<PageLoaderStateModel>(context);
-      if (this._loaderStateModel != loaderStateModel) {
-        this._loaderStateModel = loaderStateModel;
-      }
+      _loaderStateModel= Provider.of<PageLoaderStateModel>(context);
       getCategory();
     });
   }
